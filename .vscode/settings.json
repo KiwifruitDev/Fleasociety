@@ -1,4 +1,4 @@
 {
     "cmake.configureOnOpen": false,
-    "dotnet.defaultSolution": "NonsensicalVideoGenerator.sln"
+    "dotnet.defaultSolution": "KMGEngine.sln"
 }

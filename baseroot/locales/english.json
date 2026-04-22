@@ -1,0 +1,13 @@
+{
+    "Metadata": {
+        "LocalizedName": "English",
+        "FontLarge": "Munro",
+        "FontSmall": "MunroSmall"
+    },
+    "Version0": {
+        "Console:Title": "Console%1",
+        "Console:TitleExtra": " - Toggle with F5",
+        "Console:Footer": "- v%1 - View full output in console.txt - Line %2/%3 -",
+        "Content:Title": "Content"
+    }
+}

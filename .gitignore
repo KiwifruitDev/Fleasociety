@@ -398,7 +398,7 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/csharp
 
-# Nonsensical video generator
+# KMGEngine
 cred.bat
 cred.sh
 thumbs.db
@@ -410,5 +410,6 @@ baseroot/bin/*.exe
 baseroot/bin/*.dll
 baseroot/bin/*.xml
 baseroot/bin/*.icc
+baseroot/bin/
 .temp/
 dotnet-install.sh

@@ -1,0 +1,82 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <Version>1.100.0.0</Version>
+    <OutputType>WinExe</OutputType>
+    <RollForward>Major</RollForward>
+    <PublishReadyToRun>false</PublishReadyToRun>
+    <TieredCompilation>false</TieredCompilation>
+    <AssemblyName>KMGEngine</AssemblyName>
+    <AssemblyProduct>KMGEngine</AssemblyProduct>
+    <AssemblyTitle>KMGEngine</AssemblyTitle>
+    <RootNamespace>KMGEngine</RootNamespace>
+    <Authors>KiwifruitDev</Authors>
+    <AssemblyCopyright>Copyright © KiwifruitDev 2026</AssemblyCopyright>
+    <AssemblyTrademark>KMGEngine licensed under MIT
+MonoGame licensed under Ms-PL
+Newtonsoft.Json licensed under MIT
+Munro licensed under SIL OFL</AssemblyTrademark>
+    <Platforms>x64</Platforms>
+    <ProjectGuid>{34b44513-cbc4-4ea9-9ad9-e5465f9df918}</ProjectGuid>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
+    <RepositoryUrl>https://github.com/KiwifruitDev/KMGEngine.git</RepositoryUrl>
+    <RepositoryBranch>dev</RepositoryBranch>
+    <ApplicationHighDpiMode>true</ApplicationHighDpiMode>
+    <CLSCompliant>false</CLSCompliant>
+    <GenerateTargetFrameworkAttribute>false</GenerateTargetFrameworkAttribute> 
+  </PropertyGroup>
+  <PropertyGroup>
+    <OutputPath>bin\x64\$(Configuration)\net8.0-windows</OutputPath>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>icon.ico</ApplicationIcon>
+  </PropertyGroup>
+  <ItemGroup>
+    <TrimmerRootAssembly Include="Microsoft.Xna.Framework.Content.ContentTypeReader" Visible="false" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="icon.ico" />
+    <None Remove="icon.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="icon.ico">
+      <LogicalName>icon.ico</LogicalName>
+    </EmbeddedResource>
+    <EmbeddedResource Include="icon.bmp">
+      <LogicalName>icon.bmp</LogicalName>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="ExeWrapper/ExeWrapper.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.2.1105" />
+    <PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.2.1105" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="WindowsAPICodePack" Version="8.0.4" />
+  </ItemGroup>
+  <ItemGroup>
+   <FrameworkReference Include="Microsoft.WindowsDesktop.App" />
+  </ItemGroup>
+  <ItemGroup>
+    <MonoGameContentReference Include="content\Content.mgcb" />
+  </ItemGroup>
+  <Target Name="RestoreDotnetTools" BeforeTargets="Restore">
+    <Message Text="Restoring dotnet tools" Importance="High" />
+    <Exec Command="dotnet tool restore" />
+  </Target>
+	<ItemGroup>
+    <BaseRoot Include="$(ProjectDir)baseroot\**\*.*" />
+    <BaseLayerGraphics Include="$(ProjectDir)content\graphics\**\*.*" />
+    <BaseLayerSound Include="$(ProjectDir)content\sound\**\*.*" />
+ 	</ItemGroup>
+	<Target Name="CopyPlugins" AfterTargets="Build">
+    <Copy SourceFiles="@(BaseRoot)" DestinationFiles="$(ProjectDir)bin\x64\Release\net8.0-windows\%(RecursiveDir)%(Filename)%(Extension)" />
+    <Copy SourceFiles="@(BaseRoot)" DestinationFiles="$(ProjectDir)bin\x64\Debug\net8.0-windows\%(RecursiveDir)%(Filename)%(Extension)" />
+	</Target>
+</Project>

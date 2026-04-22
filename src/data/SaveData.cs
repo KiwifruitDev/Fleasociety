@@ -5,7 +5,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 
-namespace NonsensicalVideoGenerator
+namespace KMGEngine
 {
     /// <summary>
     /// This class handles data saving and loading.
@@ -16,54 +16,15 @@ namespace NonsensicalVideoGenerator
         public static Dictionary<string, string> saveValues = new Dictionary<string, string>()
         {
             {"ScreenScale", "2"}, // 1 - 4 ONLY!
-            {"MinStreamDuration", "0.2"},
-            {"MaxStreamDuration", "0.4"},
-            {"MaxClipCount", "20"},
-            {"VideoWidth", "640"},
-            {"VideoHeight", "480"},
-            {"IntrosEnabled", "false"},
-            {"OutrosEnabled", "true"},
-            {"PlayAutomatically", "true"},
-            {"GameHighScore", "0"},
-            {"MusicVolume", "50"},
             {"SoundEffectVolume", "100"},
-            {"VideoVolume", "100"},
-            {"TransitionChance", "20"},
-            {"OverlayChance", "20"},
-            {"EffectChance", "60"},
-            {"TransitionEffects", "true"},
-            {"TransitionEffectChance", "30"},
-            {"HiddenKeepTemporaryJobFolders", "false"},
             {"HiddenVerbose", "false"},
             {"DisableMotion", "false"},
-            {"FirstBoot", "true"},
-            {"DisabledMedia", "[]"},
-            {"TotalVideosRendered", "0"},
-            {"TotalMediaImported", "0"},
-            {"TotalClipsTrimmed", "0"},
-            {"PlayOverlayInFull", "false"},
-            {"MaxUniqueClips", "0"},
-            {"DeleteClipsAfterMaxUniqueClips", "false"},
-            {"DisableClipsAfterMaxUniqueClips", "false"},
-            {"EnableDiscordRPC", "true"},
-            {"ConstrainAspectRatio", "true"},
-            {"MuteMusicWhileTabbedOut", "true"},
-            {"VideoPlaybackScale", "2"},
-            {"ActiveTheme", ""},
-            {"TimeOut", "60"},
-            {"EnableTimeOut", "true"},
-            {"SkipPhotosensitiveWarningScreen", "false"},
-            {"PluginListFilterFlags", "15"},
             {"LastVersion", ""},
             {"Locale", "fixme"},
-            {"DisableHolidays", "false"},
-            {"UseExternalVideoPlayer", "false"},
             {"Fullscreen", "false"},
             {"AlwaysOnTop", "false"},
             {"MatchAspectRatio", "false"},
-            {"UseNativeCursor", "false"},
-            {"VideoFPS", "30"},
-            {"LastMusicTrack", "-1"}
+            {"UseNativeCursor", "false"}
         };
         public static string saveFileName = "Options.json";
         public static bool Save()
@@ -120,11 +81,6 @@ namespace NonsensicalVideoGenerator
                 else
                 {
                     ConsoleOutput.WriteLine("Failed to load save file.", Color.Red);
-                }
-                if (UserInterface.instance != null)
-                {
-                    if (UserInterface.instance.videoPlayer != null)
-                        UserInterface.instance.videoPlayer.Volume = int.Parse(SaveData.saveValues["VideoVolume"], CultureInfo.InvariantCulture) / 100f;
                 }
                 return true;
             }

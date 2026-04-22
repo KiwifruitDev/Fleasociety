@@ -4,7 +4,7 @@ using System.Globalization;
 using System.IO;
 using Microsoft.Xna.Framework;
 
-namespace NonsensicalVideoGenerator
+namespace KMGEngine
 {
     /// <summary>
     /// This class stores text and color together.

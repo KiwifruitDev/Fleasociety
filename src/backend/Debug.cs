@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace NonsensicalVideoGenerator
+namespace KMGEngine
 {
     public static class Debug
     {
@@ -8,12 +8,10 @@ namespace NonsensicalVideoGenerator
         public static bool debugBuild = false;
         private static bool debugMode = false;
         private static Color debugColor = new Color(255, 128, 64, 255);
-        public static bool gameCheat = false;
         public static bool paused = false;
         public static bool frame = false;
         public static bool debugSpeedDebounce = false;
         public static int debugSpeedBoost = 2;
-        public static int lastPage = 0;
         public static void SetDebugMode(bool enable)
         {
             if(!debugModePermanent)
@@ -21,61 +19,22 @@ namespace NonsensicalVideoGenerator
                 if(debugBuild)
                 {
                     ConsoleOutput.WriteLine("Debug Build (!!!)", debugColor);
-                    Global.productVersion = Global.productVersion+" (DEBUG)";
+                    Global.productVersion = Global.productVersion+" (DEBUG BUILD)";
                 }
                 else
                 {
-                    ConsoleOutput.WriteLine("Release Debug Mode (!!!)", debugColor);
-                    Global.productVersion = Global.productVersion+" (RELEASE; DEBUG MODE)";
+                    ConsoleOutput.WriteLine("Debug Mode (!!!)", debugColor);
+                    Global.productVersion = Global.productVersion+" (DEBUG MODE)";
                 }
                 if(UserInterface.instance != null)
                     UserInterface.instance.Window.Title = Global.productName+" v"+Global.productVersion;
+                debugModePermanent = true;
             }
-            debugModePermanent = true;
             debugMode = enable;
         }
         public static bool GetDebugMode()
         {
             return debugMode;
-        }
-        public static void Log(string message)
-        {
-            if(debugMode)
-                ConsoleOutput.WriteLine(message, debugColor);
-        }
-        public static void ShowDebugMenu()
-        {
-            if(debugMode)
-            {
-                if(Pagination.SelectedPage != Pagination.TopPageCount)
-                    lastPage = Pagination.SelectedPage;
-                GlobalContent.PlaySound("Select");
-                if(Pagination.DrawnPage == 5)
-                {
-                    ScreenManager.GetScreen<PastimeGameScreen>("Game")?.Hide();
-                    ScreenManager.PushNavigation("Content");
-                    ScreenManager.GetScreen<ContentScreen>("Content")?.Show();
-                }
-                Pagination.SetPage(Pagination.TopPageCount);
-            }
-        }
-        public static void HideDebugMenu()
-        {
-            if(debugMode)
-            {
-                GlobalContent.PlaySound("Back");
-                Pagination.SetPage(lastPage);
-            }
-        }
-        public static void ToggleDebugMenu()
-        {
-            if(debugMode)
-            {
-                if(Pagination.SelectedPage != Pagination.TopPageCount)
-                    ShowDebugMenu();
-                else
-                    HideDebugMenu();
-            }
         }
     }
 }

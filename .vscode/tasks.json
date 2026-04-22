@@ -1,11 +1,10 @@
 {
-    // Tasks are Windows-only for now
     "version": "2.0.0",
     "tasks": [
         {
             "label": "watch",
             "type": "shell",
-            "command": "${workspaceFolder}\\bin\\x64\\debug\\net8.0-windows\\NonsensicalVideoGenerator.exe",
+            "command": "${workspaceFolder}\\bin\\x64\\debug\\net8.0-windows\\KMGEngine.exe",
             "options":
             {
                 "cwd": "${workspaceFolder}\\bin\\x64\\debug\\net8.0-windows",
@@ -17,12 +16,12 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}\\NonsensicalVideoGenerator.csproj",
+                "${workspaceFolder}\\KMGEngine.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
                 "/p:Configuration=Debug",
                 "/p:Platform=x64",
-                "/p:DefineConstants=\"WINDOWSDX;DEBUG\"",
+                "/p:DefineConstants=DEBUG",
             ],
             "problemMatcher": "$msCompile"
         },
@@ -32,19 +31,13 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}\\NonsensicalVideoGenerator.csproj",
+                "${workspaceFolder}\\KMGEngine.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
                 "/p:Configuration=Release",
                 "/p:Platform=x64",
-                "/p:DefineConstants=\"WINDOWSDX;RELEASE\"",
+                "/p:DefineConstants=RELEASE",
             ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "upload",
-            "command": "${workspaceFolder}\\publish.bat",
-            "type": "process",
             "problemMatcher": "$msCompile"
         },
         {
@@ -53,7 +46,7 @@
             "type": "process",
             "args": [
                 "restore",
-                "${workspaceFolder}\\NonsensicalVideoGeneratorX.csproj",
+                "${workspaceFolder}\\KMGEngine.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
                 "/p:Platform=x64",
@@ -66,20 +59,7 @@
             "type": "process",
             "args": [
                 "clean",
-                "${workspaceFolder}\\NonsensicalVideoGenerator.csproj",
-                "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary",
-                "/p:Platform=x64",
-            ],
-            "problemMatcher": "$msCompile"
-        },
-        {
-            "label": "clean_exewrapper",
-            "command": "dotnet",
-            "type": "process",
-            "args": [
-                "clean",
-                "${workspaceFolder}\\ExeWrapper\\ExeWrapper.csproj",
+                "${workspaceFolder}\\KMGEngine.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
                 "/p:Platform=x64",
