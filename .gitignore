@@ -413,3 +413,4 @@ baseroot/bin/*.icc
 baseroot/bin/
 .temp/
 dotnet-install.sh
+pipeline-references/

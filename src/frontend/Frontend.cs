@@ -1,20 +1,20 @@
 ﻿using System;
-using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Windows.Forms;
 using System.Globalization;
+using MonoGame.Extended.Input;
+using MonoGameGum;
 
 namespace KMGEngine
 {
-    public class UserInterface : Game
+    public class Frontend : Game
     {
-        public static UserInterface? instance;
+        public static Frontend? instance;
         private GraphicsDeviceManager _graphics;
         private SpriteBatch? _spriteBatch;
-        public UserInterface()
+        public Frontend()
         {
-            ConsoleOutput.WriteLine("Creating new UserInterface instance...", Color.Transparent);
+            ConsoleOutput.WriteLine("Creating new Frontend instance...", Color.Transparent);
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
@@ -33,15 +33,6 @@ namespace KMGEngine
             _graphics.PreferredBackBufferHeight = height;
             _graphics.ApplyChanges();
             GlobalGraphics.preferredResolution = new Point(width, height);
-        }
-        public AspectRatio GetClosestHardwareAspectRatio()
-        {
-            // Get the aspect ratio of the screen as a fraction (4:3, 16:9, etc).
-            double aspectRatioDouble = GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.AspectRatio;
-            (int, int) aspectRatioFraction = Global.ConvertToFraction(aspectRatioDouble);
-            // Find the closest aspect ratio to the screen's aspect ratio.
-            AspectRatio closestAspectRatio = AspectRatio.All.OrderBy(x => Math.Abs(x.width / (double)x.height - aspectRatioFraction.Item1 / (double)aspectRatioFraction.Item2)).First();
-            return closestAspectRatio;
         }
         public void ToggleFullscreen()
         {
@@ -65,34 +56,8 @@ namespace KMGEngine
             }
             GlobalGraphics.SetAspectRatio(aspectRatio);
             _graphics.ApplyChanges();
-            Form? windowForm = Control.FromHandle(Window.Handle) as Form;
-            if(windowForm != null)
-            {
-                // Place window in center of screen.
-                if(fullscreen)
-                    windowForm.Location = new System.Drawing.Point(0, 0);
-                else
-                    CenterToScreen();
-            }
             if(!fullscreen)
                 GlobalGraphics.SetAspectRatio(SaveData.saveValues["MatchAspectRatio"] == "true" ? GlobalGraphics.FindMatchingAspectRatio() : new AspectRatio());
-        }
-        public void CenterToScreen()
-        {
-            Form? windowForm = Control.FromHandle(Window.Handle) as Form;
-            if(windowForm != null && Screen.PrimaryScreen != null)
-            {
-                // Place window in center of screen.
-                windowForm.Location = new System.Drawing.Point(Screen.PrimaryScreen.WorkingArea.Width / 2 - windowForm.Width / 2, Screen.PrimaryScreen.WorkingArea.Height / 2 - windowForm.Height / 2);
-            }
-        }
-        public void SetAlwaysOnTop(bool alwaysOnTop)
-        {
-            Form? windowForm = Control.FromHandle(Window.Handle) as Form;
-            if(windowForm != null)
-            {
-                windowForm.TopMost = alwaysOnTop;
-            }
         }
         public void SetNativeCursor(bool useNativeCursor)
         {
@@ -120,11 +85,6 @@ namespace KMGEngine
             ScreenManager.LoadScreens();
             ConsoleOutput.WriteLine("Initialization complete.", Color.Transparent);
             Window.AllowAltF4 = false;
-            Form? _GameForm = Control.FromHandle(Window.Handle) as Form;
-            if (_GameForm != null)
-            {
-                _GameForm.Closing += ClosingForm;
-            }
             // match aspect ratio
             AspectRatio aspectRatio = new();
             if (SaveData.saveValues["MatchAspectRatio"] == "true")
@@ -133,9 +93,6 @@ namespace KMGEngine
             // fullscreen
             if (bool.Parse(SaveData.saveValues["Fullscreen"]))
                 SetFullscreen(true);
-            // always on top
-            if (bool.Parse(SaveData.saveValues["AlwaysOnTop"]))
-                SetAlwaysOnTop(true);
             // hide cursor
             SetNativeCursor(bool.Parse(SaveData.saveValues["UseNativeCursor"]));
             base.Initialize();
@@ -159,7 +116,7 @@ namespace KMGEngine
         }
         protected override void Update(GameTime gameTime)
         {
-            L.cyclerTimer += gameTime.ElapsedGameTime.TotalSeconds;
+            KeyboardExtended.Update();
             // Update screens.
             ScreenManager.Update(gameTime);
             base.Update(gameTime);

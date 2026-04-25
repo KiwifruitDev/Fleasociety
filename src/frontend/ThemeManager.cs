@@ -84,12 +84,12 @@ namespace KMGEngine
         // Replacement for contentManager.Load<T>(path)
         public static T LoadLayeredContent<T>(string path)
         {
-            if (UserInterface.instance == null)
+            if (Frontend.instance == null)
             {
                 // Can't proceed, MonoGame isn't initialized
                 throw new InvalidOperationException("MonoGame isn't initialized. Cannot load content.");
             }
-            ContentManager contentManager = UserInterface.instance.Content;
+            ContentManager contentManager = Frontend.instance.Content;
             // Make sure xnb file exists
             if (!File.Exists(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) ?? ".", "Content", activeTheme.prefix + path + ".xnb")))
             {
@@ -103,13 +103,13 @@ namespace KMGEngine
         {
             ConsoleOutput.WriteLine($"Theme changed to {theme.name}.", Color.Yellow);
             activeTheme = theme;
-            if (UserInterface.instance != null)
+            if (Frontend.instance != null)
             {
-                UserInterface.instance.Content.Unload();
+                Frontend.instance.Content.Unload();
                 // Load default content.
-                GlobalContent.LoadDefaultContent(UserInterface.instance.Content, UserInterface.instance.GraphicsDevice);
+                GlobalContent.LoadDefaultContent(Frontend.instance.Content, Frontend.instance.GraphicsDevice);
                 // Load all screen content.
-                ScreenManager.LoadContent(UserInterface.instance.Content, UserInterface.instance.GraphicsDevice);
+                ScreenManager.LoadContent(Frontend.instance.Content, Frontend.instance.GraphicsDevice);
             }
             GlobalContent.PlaySound("Start");
         }

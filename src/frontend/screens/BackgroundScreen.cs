@@ -21,11 +21,6 @@ namespace KMGEngine
         private int scrollX = 0;
         private int scrollY = 0;
         private float counter = 360;
-        private float mouseX = 0;
-        private float mouseY = 0;
-        private float lerpMouseX = 0;
-        private float lerpMouseY = 0;
-        private float lerpSpeed = 0.025f;
         public bool Update(GameTime gameTime, bool handleInput)
         {
             // Move background.
@@ -41,31 +36,15 @@ namespace KMGEngine
             // Now it scrolls in some sort of zig-zag pattern.
             scrollX = (-totalCount/4) - (int)(Math.Sin(counter * Math.PI / -90) * (GlobalGraphics.scaledWidth/GlobalGraphics.scale) / 2);
             scrollY = (-totalCount/4) - (int)(Math.Cos(counter * Math.PI / -180) * (GlobalGraphics.scaledHeight/GlobalGraphics.scale) / 2);
-            /*
-            if(scrollX >= -GlobalGraphics.width-1)
-                scrollX = -totalCount + GlobalGraphics.width;
-            if(scrollY >= -GlobalGraphics.height-1)
-                scrollY = -totalCount + GlobalGraphics.height;
-            */
             // Input.
             if(handleInput)
-            {                
-                // Pan the screen slightly when moving mouse (from center)
-                mouseX = Input.MouseState.Position.X + GlobalGraphics.scaledWidth / 2;
-                mouseY = Input.MouseState.Position.Y + GlobalGraphics.scaledHeight / 2;
-
+            {
                 // Detect clicks.
                 if (Input.LastMouseState.LeftButton == ButtonState.Released && Input.MouseState.LeftButton == ButtonState.Pressed) {
                     // Play a sound.
                     GlobalContent.PlaySound("Hover");
                     return true;
                 }
-            }
-            else
-            {
-                // Lerp last mouse position to center (smooth)
-                mouseX = MathHelper.Lerp(mouseX, GlobalGraphics.scaledWidth / 2, GlobalGraphics.Scale(lerpSpeed));
-                mouseY = MathHelper.Lerp(mouseY, GlobalGraphics.scaledHeight / 2, GlobalGraphics.Scale(lerpSpeed));
             }
             return false;
         }
@@ -79,16 +58,8 @@ namespace KMGEngine
                 // End existing spritebatch
                 spriteBatch.End();
 
-                // Lerp the mouse position (limit mouse movement to lerpSpeed so it smooths out)
-                lerpMouseX = MathHelper.Lerp(lerpMouseX, mouseX, GlobalGraphics.Scale(lerpSpeed));
-                lerpMouseY = MathHelper.Lerp(lerpMouseY, mouseY, GlobalGraphics.Scale(lerpSpeed));
-
-                // Clamp to screen bounds
-                lerpMouseX = Math.Clamp(lerpMouseX, -GlobalGraphics.scaledWidth, GlobalGraphics.scaledWidth*2);
-                lerpMouseY = Math.Clamp(lerpMouseY, -GlobalGraphics.scaledHeight, GlobalGraphics.scaledHeight*2);
-
-                float mX = GlobalGraphics.drawOffset.X /*- lerpMouseX*/;
-                float mY = GlobalGraphics.drawOffset.Y /*- lerpMouseY*/;
+                float mX = GlobalGraphics.drawOffset.X;
+                float mY = GlobalGraphics.drawOffset.Y;
 
                 // Create matrix
                 Matrix matrix = Matrix.CreateTranslation(mX, mY, 0);
@@ -110,13 +81,6 @@ namespace KMGEngine
                     }
                 }
 
-                // (DEBUG) Draw scroll position.
-                //GlobalContent.DrawString(spriteBatch, L.FontSmall(), $"{scrollX}, {scrollY}", new Vector2(GlobalGraphics.Scale(16), GlobalGraphics.Scale(16)), Color.White);
-                // (DEBUG) Draw count of circles.
-                //GlobalContent.DrawString(spriteBatch, L.FontSmall(), $"{circles.Count}", new Vector2(GlobalGraphics.Scale(16), GlobalGraphics.Scale(32)), Color.White);
-                // (DEBUG) Draw mouse click state.
-                // GlobalContent.DrawString(spriteBatch, L.FontSmall(), $"{mouseReleased}", new Vector2(GlobalGraphics.Scale(16), GlobalGraphics.Scale(48)), Color.White);
-                
                 // End offset spritebatch
                 spriteBatch.End();
                 // Remake spritebatch

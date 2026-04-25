@@ -59,8 +59,8 @@ namespace KMGEngine
                         if(Input.MouseState.Y >= GlobalGraphics.Scale(58+(9*2)) && Input.MouseState.Y <= GlobalGraphics.Scale(58+(9*2)+6))
                         {
                             // Toggle user resizing.
-                            if(UserInterface.instance != null)
-                                UserInterface.instance.Window.AllowUserResizing = !UserInterface.instance.Window.AllowUserResizing;
+                            if(Frontend.instance != null)
+                                Frontend.instance.Window.AllowUserResizing = !Frontend.instance.Window.AllowUserResizing;
                             GlobalContent.PlaySound("Select");
                             return true;
                         }
@@ -134,8 +134,8 @@ namespace KMGEngine
                         {
                             // Toggle fullscreen.
                             GlobalContent.PlaySound("Select");
-                            if(UserInterface.instance != null)
-                                UserInterface.instance.ToggleFullscreen();
+                            if(Frontend.instance != null)
+                                Frontend.instance.ToggleFullscreen();
                             return true;
                         }
                         if(Input.MouseState.Y >= GlobalGraphics.Scale(58+(9*15)) && Input.MouseState.Y <= GlobalGraphics.Scale(58+(9*15)+6))
@@ -159,8 +159,8 @@ namespace KMGEngine
                         {
                             // Unlock FPS.
                             GlobalContent.PlaySound("Select");
-                            if(UserInterface.instance != null)
-                                UserInterface.instance.SetFPSUnlock(UserInterface.instance.IsFixedTimeStep);
+                            if(Frontend.instance != null)
+                                Frontend.instance.SetFPSUnlock(Frontend.instance.IsFixedTimeStep);
                             return true;
                         }
                     }
@@ -174,7 +174,7 @@ namespace KMGEngine
             if(Debug.GetDebugMode())
             {
                 DrawButton(spriteBatch, 137, 58, "Locale: " + L.GetLocale().name + " " + L.GetLocale().localizedName);
-                DrawButton(spriteBatch, 137, 58+(9*2), "User Resizing: " + (UserInterface.instance != null && UserInterface.instance.Window.AllowUserResizing ? "Enabled" : "Disabled"));
+                DrawButton(spriteBatch, 137, 58+(9*2), "User Resizing: " + (Frontend.instance != null && Frontend.instance.Window.AllowUserResizing ? "Enabled" : "Disabled"));
                 DrawButton(spriteBatch, 137, 58+(9*4), "Screen Scale: " + SaveData.saveValues["ScreenScale"]);
                 DrawButton(spriteBatch, 137, 58+(9*6), "Speed Boost: x" + Debug.debugSpeedBoost);
                 DrawButton(spriteBatch, 137, 58+(9*7), "Draw Offset: " + GlobalGraphics.drawOffset.X.ToString(CultureInfo.InvariantCulture) + ", " + GlobalGraphics.drawOffset.Y.ToString(CultureInfo.InvariantCulture));
@@ -183,7 +183,7 @@ namespace KMGEngine
                 DrawButton(spriteBatch, 137, 58+(9*13), (GlobalGraphics.fullScreen ? "Disable" : "Enable") + " Fullscreen");
                 DrawButton(spriteBatch, 137, 58+(9*15), (bool.Parse(SaveData.saveValues["HiddenVerbose"]) ? "Disable" : "Enable") + " Verbose");
                 DrawButton(spriteBatch, 137, 58+(9*17), "Open console.txt");
-                DrawButton(spriteBatch, 137, 58+(9*18), (UserInterface.instance != null && UserInterface.instance.IsFixedTimeStep ? "Unlock" : "Lock") + " FPS and VSync");
+                DrawButton(spriteBatch, 137, 58+(9*18), (Frontend.instance != null && Frontend.instance.IsFixedTimeStep ? "Unlock" : "Lock") + " FPS and VSync");
                 GlobalContent.DrawString(spriteBatch, L.FontSmall(), "CTRL+F3: Toggle Debug Mode", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41)), Color.White);
                 GlobalContent.DrawString(spriteBatch, L.FontSmall(), "F6: Pause", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*2)), Color.White);
                 GlobalContent.DrawString(spriteBatch, L.FontSmall(), "F7: Advance Frame", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*3)), Color.White);

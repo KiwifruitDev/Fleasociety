@@ -22,7 +22,6 @@ namespace KMGEngine
             {"LastVersion", ""},
             {"Locale", "fixme"},
             {"Fullscreen", "false"},
-            {"AlwaysOnTop", "false"},
             {"MatchAspectRatio", "false"},
             {"UseNativeCursor", "false"}
         };

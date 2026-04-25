@@ -77,8 +77,8 @@ namespace KMGEngine
                 SaveData.saveValues["Locale"] = "english";
             if(Global.parameters.Contains("-fullscreen"))
                 SaveData.saveValues["Fullscreen"] = "true";
-            Global.productVersion = (Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0.0");
-            using (var game = new UserInterface())
+            Global.productVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0.0";
+            using (var game = new Frontend())
                 game.Run();
             // On graceful exit, save the game data
             SaveData.Save();

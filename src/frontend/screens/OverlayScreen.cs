@@ -74,8 +74,8 @@ namespace KMGEngine
                     Global.exiting = false;
                     if(!Global.fakeExit)
                     {
-                        if(UserInterface.instance != null)
-                            UserInterface.instance.Exit();
+                        if(Frontend.instance != null)
+                            Frontend.instance.Exit();
                     }
                 }
                 return true;

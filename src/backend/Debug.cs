@@ -26,8 +26,8 @@ namespace KMGEngine
                     ConsoleOutput.WriteLine("Debug Mode (!!!)", debugColor);
                     Global.productVersion = Global.productVersion+" (DEBUG MODE)";
                 }
-                if(UserInterface.instance != null)
-                    UserInterface.instance.Window.Title = Global.productName+" v"+Global.productVersion;
+                if(Frontend.instance != null)
+                    Frontend.instance.Window.Title = Global.productName+" v"+Global.productVersion;
                 debugModePermanent = true;
             }
             debugMode = enable;

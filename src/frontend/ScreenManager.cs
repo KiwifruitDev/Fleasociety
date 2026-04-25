@@ -106,14 +106,14 @@ namespace KMGEngine
                 Debug.paused = false;
             // Handle mouse input, so that screens don't have to do that.
             // Only change if the window is active and the mouse is over the window.
-            if(UserInterface.instance != null)
+            if(Frontend.instance != null)
             {
                 Input.LastMouseState = Input.MouseState;
                 Input.LastKeyboardState = Input.KeyboardState;
                 Input._mouseState = Mouse.GetState();
                 Input._keyboardState = Keyboard.GetState();
             }
-            bool handleInput = UserInterface.instance != null && UserInterface.instance.IsActive && Input.MouseState.X >= 0 && Input.MouseState.X <= GlobalGraphics.scaledWidth &&
+            bool handleInput = Frontend.instance != null && Frontend.instance.IsActive && Input.MouseState.X >= 0 && Input.MouseState.X <= GlobalGraphics.scaledWidth &&
                 Input.MouseState.Y >= 0 && Input.MouseState.Y <= GlobalGraphics.scaledHeight;
             // Update the drawn screens in layer order and reversed.
             List<IScreen> orderedScreens = drawnScreens.OrderBy(s => s.layer).ToList();
@@ -128,18 +128,18 @@ namespace KMGEngine
                     }
                 }
             }
-            if(UserInterface.instance != null)
+            if(Frontend.instance != null)
             {
                 // F11 or Alt+Enter will toggle fullscreen
                 if(Input.KeyboardState.IsKeyDown(Keys.F11) && Input.LastKeyboardState.IsKeyUp(Keys.F11)
                     || Input.KeyboardState.IsKeyDown(Keys.LeftAlt) && Input.KeyboardState.IsKeyDown(Keys.Enter) && Input.LastKeyboardState.IsKeyUp(Keys.Enter))
                 {
-                    UserInterface.instance.ToggleFullscreen();
+                    Frontend.instance.ToggleFullscreen();
                 }
                 // Alt+F4 will close the game
                 if(Input.KeyboardState.IsKeyDown(Keys.LeftAlt) && Input.KeyboardState.IsKeyDown(Keys.F4))
                 {
-                    UserInterface.instance.ExitGracefully();
+                    Frontend.instance.ExitGracefully();
                 }
             }
             // Toggle debug mode
@@ -197,7 +197,7 @@ namespace KMGEngine
             {
                 orderedScreens[i].Draw(gameTime, spriteBatch);
             }
-            if(UserInterface.instance != null && !UserInterface.instance.IsMouseVisible)
+            if(Frontend.instance != null && !Frontend.instance.IsMouseVisible)
                 spriteBatch.Draw(GlobalContent.GetTexture("Cursor"), new Rectangle(Input.MouseState.Position.X - GlobalGraphics.Scale(4), Input.MouseState.Position.Y - GlobalGraphics.Scale(4), GlobalGraphics.Scale(16), GlobalGraphics.Scale(16)), Color.White);
         }
     }

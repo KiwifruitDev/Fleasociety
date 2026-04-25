@@ -42,9 +42,6 @@ namespace KMGEngine
         public static string defaultLocale { get; set; } = "english";
         public static string localeFolder { get; set; } = "locales";
         public static int maxVersion { get; set; } = 0;
-        public static double cyclerTimer { get; set; } = 0;
-        public static Locale? cyclerLocale = null;
-        public static int cyclerLocaleIndex = 1;
         public static Locale GetLocale()
         {
             if(locales.Count == 0)
@@ -59,22 +56,6 @@ namespace KMGEngine
         {
             Locale locale = GetLocale();
             int curLocaleIndex = localeIndex;
-            // If text contains ViewLocalizationOptions then cycle language variables.
-            if (text.Contains("ViewLocalizationOptions") || text.Contains("SelectLanguageOptionsPage"))
-            {
-                if (cyclerLocale == null)
-                    cyclerLocale = locale;
-                locale = cyclerLocale;
-                curLocaleIndex = cyclerLocaleIndex;
-                if (cyclerTimer >= 1)
-                {
-                    cyclerTimer = 0;
-                    cyclerLocaleIndex++;
-                    if (cyclerLocaleIndex >= locales.Count)
-                        cyclerLocaleIndex = 1;
-                    cyclerLocale = locales[curLocaleIndex];
-                }
-            }
             string? result = text;
             // Version is used to ensure updated strings are used.
             if (curLocaleIndex >= 0 && curLocaleIndex < locales.Count)
@@ -262,9 +243,6 @@ namespace KMGEngine
             locales.Clear();
             locales.Add(dummyLocale);
             localeIndex = 0;
-            cyclerLocale = null;
-            cyclerLocaleIndex = 1;
-            cyclerTimer = 0;
         }
     }
 }
