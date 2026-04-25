@@ -5,7 +5,7 @@ using System.Reflection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     public class Theme
     {

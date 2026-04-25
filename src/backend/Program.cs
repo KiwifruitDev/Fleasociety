@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using Microsoft.Xna.Framework;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     static class Program
     {

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework.Media;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     /// <summary>
     /// This is the overlay screen, it draws graphics in place for the hard-coded title text alongside a border.

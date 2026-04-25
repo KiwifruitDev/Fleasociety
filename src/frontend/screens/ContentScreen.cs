@@ -2,7 +2,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     /// <summary>
     /// This is the help screen.

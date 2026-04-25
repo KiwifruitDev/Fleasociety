@@ -1,14 +1,14 @@
 using System;
 using System.Collections.Generic;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     /// <summary>
     /// This class stores useful global variables and functions.
     /// </summary>
     public static class Global
     {
-        public static string productName = "KMGEngine";
+        public static string productName = "Fleasociety";
         public static string productVersion = "0.0.0.0";
         public static bool exiting = false;
         public static bool fakeExit = false;

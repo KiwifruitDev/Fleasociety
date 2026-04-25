@@ -4,7 +4,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System.Globalization;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     /// <summary>
     /// Show console output through a screen, acts as a modal but doesn't follow modal rules.

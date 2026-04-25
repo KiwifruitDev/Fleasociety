@@ -5,7 +5,7 @@ using System.Globalization;
 using MonoGame.Extended.Input;
 using MonoGameGum;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     public class Frontend : Game
     {

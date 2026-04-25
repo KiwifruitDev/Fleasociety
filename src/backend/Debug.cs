@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     public static class Debug
     {

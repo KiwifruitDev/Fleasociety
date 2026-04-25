@@ -4,7 +4,7 @@ using System.Globalization;
 using System.IO;
 using Microsoft.Xna.Framework;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     /// <summary>
     /// This class stores text and color together.

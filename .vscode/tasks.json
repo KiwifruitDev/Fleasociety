@@ -4,7 +4,7 @@
         {
             "label": "watch",
             "type": "shell",
-            "command": "${workspaceFolder}\\bin\\x64\\debug\\net8.0-windows\\KMGEngine.exe",
+            "command": "${workspaceFolder}\\bin\\x64\\debug\\net8.0-windows\\Fleasociety.exe",
             "options":
             {
                 "cwd": "${workspaceFolder}\\bin\\x64\\debug\\net8.0-windows",
@@ -16,7 +16,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}\\KMGEngine.csproj",
+                "${workspaceFolder}\\Fleasociety.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
                 "/p:Configuration=Debug",
@@ -31,7 +31,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}\\KMGEngine.csproj",
+                "${workspaceFolder}\\Fleasociety.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
                 "/p:Configuration=Release",
@@ -46,7 +46,7 @@
             "type": "process",
             "args": [
                 "restore",
-                "${workspaceFolder}\\KMGEngine.csproj",
+                "${workspaceFolder}\\Fleasociety.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
                 "/p:Platform=x64",
@@ -59,7 +59,7 @@
             "type": "process",
             "args": [
                 "clean",
-                "${workspaceFolder}\\KMGEngine.csproj",
+                "${workspaceFolder}\\Fleasociety.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
                 "/p:Platform=x64",

@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     /// <summary>
     /// This is the background screen, it draws a scrolling tiled pattern.

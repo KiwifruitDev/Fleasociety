@@ -6,7 +6,7 @@ using Newtonsoft.Json;
 using System.IO;
 using System.Reflection;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     public class Locale
     {

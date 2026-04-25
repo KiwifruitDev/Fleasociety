@@ -1,6 +1,6 @@
 using Microsoft.Xna.Framework.Input;
 
-namespace KMGEngine
+namespace Fleasociety
 { 
     public static class Input
     {

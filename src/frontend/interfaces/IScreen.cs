@@ -1,4 +1,4 @@
-namespace KMGEngine
+namespace Fleasociety
 {
     /// <summary>
     /// A screen is a graphical container that has update and draw logic.

@@ -1,17 +1,17 @@
 <Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <Version>1.100.0.0</Version>
+    <Version>0.1.0.0</Version>
     <OutputType>WinExe</OutputType>
     <RollForward>Major</RollForward>
     <PublishReadyToRun>false</PublishReadyToRun>
     <TieredCompilation>false</TieredCompilation>
-    <AssemblyName>KMGEngine</AssemblyName>
-    <AssemblyProduct>KMGEngine</AssemblyProduct>
-    <AssemblyTitle>KMGEngine</AssemblyTitle>
-    <RootNamespace>KMGEngine</RootNamespace>
+    <AssemblyName>Fleasociety</AssemblyName>
+    <AssemblyProduct>Fleasociety</AssemblyProduct>
+    <AssemblyTitle>Fleasociety</AssemblyTitle>
+    <RootNamespace>Fleasociety</RootNamespace>
     <Authors>KiwifruitDev</Authors>
     <AssemblyCopyright>Copyright © KiwifruitDev 2026</AssemblyCopyright>
-    <AssemblyTrademark>KMGEngine licensed under MIT
+    <AssemblyTrademark>Fleasociety licensed under MIT
 MonoGame licensed under Ms-PL
 Newtonsoft.Json licensed under MIT
 Munro licensed under SIL OFL</AssemblyTrademark>
@@ -21,7 +21,7 @@ Munro licensed under SIL OFL</AssemblyTrademark>
     <UseWindowsForms>true</UseWindowsForms>
     <TargetFramework>net8.0-windows</TargetFramework>
     <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
-    <RepositoryUrl>https://github.com/KiwifruitDev/KMGEngine.git</RepositoryUrl>
+    <RepositoryUrl>https://github.com/KiwifruitDev/Fleasociety.git</RepositoryUrl>
     <RepositoryBranch>dev</RepositoryBranch>
     <ApplicationHighDpiMode>true</ApplicationHighDpiMode>
     <CLSCompliant>false</CLSCompliant>

@@ -4,7 +4,7 @@ using System.Globalization;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     public class AspectRatio
     {

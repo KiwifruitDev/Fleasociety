@@ -1,4 +1,4 @@
 {
     "cmake.configureOnOpen": false,
-    "dotnet.defaultSolution": "KMGEngine.sln"
+    "dotnet.defaultSolution": "Fleasociety.sln"
 }

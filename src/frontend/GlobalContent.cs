@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Media;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     /// <summary>
     /// Store content for access by other classes.

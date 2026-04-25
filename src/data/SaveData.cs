@@ -5,7 +5,7 @@ using System.IO;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     /// <summary>
     /// This class handles data saving and loading.

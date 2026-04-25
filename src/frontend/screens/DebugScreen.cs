@@ -9,7 +9,7 @@ using System;
 using System.Linq;
 using System.Collections.Generic;
 
-namespace KMGEngine
+namespace Fleasociety
 {
     /// <summary>
     /// Debug screen.
