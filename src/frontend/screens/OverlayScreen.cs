@@ -33,11 +33,13 @@ namespace Fleasociety
             Texture2D pixel = GlobalContent.GetTexture("Pixel");
             spriteBatch.Draw(pixel, new Rectangle(0, 0, GlobalGraphics.scaledWidth, GlobalGraphics.scaledHeight), new Color(0, 0, 0, exitOpacity));
             // Draw the border.
+            /*
             spriteBatch.Draw(pixel, new Rectangle(0, 0, GlobalGraphics.scaledWidth, (int)(4 * GlobalGraphics.scale)), bgColor);
             spriteBatch.Draw(pixel, new Rectangle(0, GlobalGraphics.scaledHeight - (int)(4 * GlobalGraphics.scale), GlobalGraphics.scaledWidth, (int)(4 * GlobalGraphics.scale)), bgColor);
             spriteBatch.Draw(pixel, new Rectangle(0, 0, (int)(4 * GlobalGraphics.scale), GlobalGraphics.scaledHeight), bgColor);
             spriteBatch.Draw(pixel, new Rectangle(GlobalGraphics.scaledWidth - (int)(4 * GlobalGraphics.scale), 0, (int)(4 * GlobalGraphics.scale), GlobalGraphics.scaledHeight), bgColor);
-            if (Global.tooltip != "" && tooltipVisible && Global.ready)
+            */
+            if (Global.tooltip != "" && tooltipVisible)
                 {
                     SpriteFont spriteFont = L.FontSmall();
                     string tooltip = Global.tooltip;

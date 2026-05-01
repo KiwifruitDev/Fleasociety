@@ -126,7 +126,7 @@ namespace Fleasociety
             fonts.Clear();
             songs.Clear();
         }
-        public static bool AddTexture(string name, Texture2D texture)
+        public static Texture2D AddTexture(string name, Texture2D texture)
         {
             if (textures.ContainsKey(name))
             {
@@ -137,7 +137,7 @@ namespace Fleasociety
             {
                 textures.Add(name, texture);
             }
-            return true;
+            return texture;
         }
         public static bool AddFont(string name, SpriteFont font, Vector2 offset)
         {

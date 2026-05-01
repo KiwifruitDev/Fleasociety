@@ -103,6 +103,10 @@ namespace Fleasociety
         {
             return (float)(value * scale);
         }
+        public static Vector2 Scale(Vector2 value)
+        {
+            return new Vector2(Scale(value.X), Scale(value.Y));
+        }
         public static Point Scale(Point value)
         {
             return new Point(Scale(value.X), Scale(value.Y));
