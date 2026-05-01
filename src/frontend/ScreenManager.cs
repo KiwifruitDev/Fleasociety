@@ -174,7 +174,7 @@ namespace Fleasociety
                 orderedScreens[i].Draw(gameTime, spriteBatch);
             }
             if(Frontend.instance != null && !Frontend.instance.IsMouseVisible)
-                spriteBatch.Draw(GlobalContent.GetTexture("Cursor"), new Rectangle(Input.MouseState.Position.X - GlobalGraphics.Scale(4), Input.MouseState.Position.Y - GlobalGraphics.Scale(4), GlobalGraphics.Scale(16), GlobalGraphics.Scale(16)), Color.White);
+                spriteBatch.Draw(GlobalContent.GetTexture("Cursor"), new Rectangle(Input.MouseState.Position.X - GlobalGraphics.Scale(4), Input.MouseState.Position.Y - GlobalGraphics.Scale(4), GlobalGraphics.Scale(32), GlobalGraphics.Scale(32)), Color.White);
         }
     }
 }

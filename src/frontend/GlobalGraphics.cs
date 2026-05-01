@@ -127,7 +127,7 @@ namespace Fleasociety
         {
             if (shadowColor == default)
                 shadowColor = ThemeManager.GetColor("TextShadow");
-            DrawString(spriteBatch, spriteFont, text, position + new Vector2(1, 1), shadowColor);
+            DrawString(spriteBatch, spriteFont, text, position + Scale(new Vector2(1, 1)), shadowColor);
             DrawString(spriteBatch, spriteFont, text, position, color);
         }
         public static Rectangle DrawButton(SpriteBatch spriteBatch, int x, int y, string text)
