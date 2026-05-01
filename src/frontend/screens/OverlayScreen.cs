@@ -2,8 +2,6 @@ using System;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 
 namespace Fleasociety
 {
@@ -60,7 +58,7 @@ namespace Fleasociety
                         position.Y = GlobalGraphics.Scale(2);
                     spriteBatch.Draw(pixel, new Rectangle((int)position.X, (int)position.Y, (int)tooltipSize.X + GlobalGraphics.Scale(2), (int)tooltipSize.Y - GlobalGraphics.Scale(2)), ThemeManager.GetColor("BackgroundTooltip"));
                     // White text
-                    GlobalContent.DrawString(spriteBatch, spriteFont, tooltip, new Vector2(position.X + GlobalGraphics.Scale(2), position.Y - GlobalGraphics.Scale(2)), Color.White);
+                    GlobalGraphics.DrawShadowedString(spriteBatch, spriteFont, tooltip, new Vector2(position.X + GlobalGraphics.Scale(2), position.Y - GlobalGraphics.Scale(2)), Color.White);
                 }
         }
         public bool Update(GameTime gameTime, bool handleInput)
@@ -69,14 +67,11 @@ namespace Fleasociety
             if(Global.exiting)
             {
                 exitOpacity += Global.exitOpacityIncrease;
-                if(exitOpacity >= 1)
+                if(exitOpacity >= 1 || !Global.fakeExit)
                 {
                     Global.exiting = false;
-                    if(!Global.fakeExit)
-                    {
-                        if(Frontend.instance != null)
-                            Frontend.instance.Exit();
-                    }
+                    if(Frontend.instance != null)
+                        Frontend.instance.Exit();
                 }
                 return true;
             }

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Globalization;
 using System.IO;
 using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
@@ -21,7 +20,6 @@ namespace Fleasociety
             {"DisableMotion", "false"},
             {"LastVersion", ""},
             {"Locale", "fixme"},
-            {"Fullscreen", "false"},
             {"MatchAspectRatio", "false"},
             {"UseNativeCursor", "false"}
         };

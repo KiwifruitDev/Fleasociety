@@ -54,7 +54,6 @@ namespace Fleasociety
         public static float scale = float.Parse(SaveData.saveValues["ScreenScale"], CultureInfo.InvariantCulture);
         public static Vector2 drawOffset = new(0, 0);
         public static Point preferredResolution = new(320, 240);
-        public static bool fullScreen = false;
         public static int scaledWidth = (int)(new AspectRatio().preferredResolution.X * scale);
         public static int scaledHeight = (int)(new AspectRatio().preferredResolution.Y * scale);
         public static AspectRatio FindMatchingAspectRatio()
@@ -104,16 +103,40 @@ namespace Fleasociety
         {
             return (float)(value * scale);
         }
-        public static Rectangle DrawButton(SpriteBatch spriteBatch, int x, int y, Color color, string text, Color textColor, Color borderColor)
+        public static Point Scale(Point value)
+        {
+            return new Point(Scale(value.X), Scale(value.Y));
+        }
+        public static Rectangle Scale(Rectangle value)
+        {
+            return new Rectangle(Scale(value.Location), Scale(value.Size));
+        }
+        public static void DrawString(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color = default)
+        {
+            if (color == default)
+                color = ThemeManager.GetColor("Text");
+            // Offset text if font has an offset.
+            position += GlobalContent.GetFontOffset(spriteFont);
+            spriteBatch.DrawString(spriteFont, text, position, color);
+        }
+        public static void DrawShadowedString(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color = default, Color shadowColor = default)
+        {
+            if (shadowColor == default)
+                shadowColor = ThemeManager.GetColor("TextShadow");
+            DrawString(spriteBatch, spriteFont, text, position + new Vector2(1, 1), shadowColor);
+            DrawString(spriteBatch, spriteFont, text, position, color);
+        }
+        public static Rectangle DrawButton(SpriteBatch spriteBatch, int x, int y, string text)
         {
             Vector2 measured = L.FontSmall().MeasureString(text);
             // Offset measurements.
             measured.X += Scale(3);
             measured.Y -= Scale(5);
-            Rectangle generatedRectangle = new Rectangle(x, y, (int)measured.X, (int)measured.Y);
-            spriteBatch.Draw(GlobalContent.GetTexture("Pixel"), generatedRectangle, borderColor);
-            spriteBatch.Draw(GlobalContent.GetTexture("Pixel"), new Rectangle(x + Scale(1), y + Scale(1), (int)measured.X - Scale(2), (int)measured.Y - Scale(2)), color);
-            GlobalContent.DrawString(spriteBatch, L.FontSmall(), text, new Vector2(x+Scale(2), y-Scale(4)), textColor);
+            Rectangle generatedRectangle = new Rectangle(x+Scale(1), y+Scale(1), (int)measured.X, (int)measured.Y);
+            spriteBatch.Draw(GlobalContent.GetTexture("Pixel"), generatedRectangle, Color.Black);
+            generatedRectangle = new Rectangle(x, y, (int)measured.X, (int)measured.Y);
+            spriteBatch.Draw(GlobalContent.GetTexture("Pixel"), generatedRectangle, Color.Gray);
+            DrawShadowedString(spriteBatch, L.FontSmall(), text, new Vector2(x+Scale(2), y-Scale(4)));
             return new Rectangle(x, y, (int)measured.X, (int)measured.Y);
         }
     }

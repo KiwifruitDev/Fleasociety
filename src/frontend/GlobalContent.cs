@@ -181,6 +181,12 @@ namespace Fleasociety
         {
             return fonts[name];
         }
+        public static Vector2 GetFontOffset(SpriteFont font)
+        {
+            if (fontOffsets.ContainsKey(font))
+                return fontOffsets[font];
+            return Vector2.Zero;
+        }
         public static Song GetSong(int index)
         {
             return songs[index];
@@ -188,29 +194,6 @@ namespace Fleasociety
         public static bool CheckFont(string name)
         {
             return fonts.ContainsKey(name);
-        }
-        public static void DrawString(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, float scale, SpriteEffects effects, float layerDepth)
-        {
-            Vector2 scale2 = new Vector2(scale, scale);
-            DrawString(spriteBatch, spriteFont, text, position, color, rotation, origin, scale2, effects, layerDepth);
-        }
-        public static void DrawString(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects effects, float layerDepth)
-        {
-            // Offset text if font has an offset.
-            if (fontOffsets.ContainsKey(spriteFont))
-            {
-                position += fontOffsets[spriteFont];
-            }
-            spriteBatch.DrawString(spriteFont, text, position, color, rotation, origin, scale, effects, layerDepth);
-        }
-        public static void DrawString(SpriteBatch spriteBatch, SpriteFont spriteFont, string text, Vector2 position, Color color)
-        {
-            // Offset text if font has an offset.
-            if (fontOffsets.ContainsKey(spriteFont))
-            {
-                position += fontOffsets[spriteFont];
-            }
-            spriteBatch.DrawString(spriteFont, text, position, color);
         }
         public static void PlaySound(string name)
         {

@@ -7,7 +7,6 @@ using Microsoft.Xna.Framework.Input;
 using System.Globalization;
 using System;
 using System.Linq;
-using System.Collections.Generic;
 
 namespace Fleasociety
 {
@@ -17,7 +16,7 @@ namespace Fleasociety
     public class DebugScreen : IScreen
     {
         public string title { get; set; } = "Debug";
-        public int layer { get; set; } = 4;
+        public int layer { get; set; } = 5;
         public bool Update(GameTime gameTime, bool handleInput)
         {
             if(Debug.GetDebugMode())
@@ -130,14 +129,6 @@ namespace Fleasociety
                             GlobalContent.PlaySound("Select");
                             return true;
                         }
-                        if(Input.MouseState.Y >= GlobalGraphics.Scale(58+(9*13)) && Input.MouseState.Y <= GlobalGraphics.Scale(58+(9*13)+6))
-                        {
-                            // Toggle fullscreen.
-                            GlobalContent.PlaySound("Select");
-                            if(Frontend.instance != null)
-                                Frontend.instance.ToggleFullscreen();
-                            return true;
-                        }
                         if(Input.MouseState.Y >= GlobalGraphics.Scale(58+(9*15)) && Input.MouseState.Y <= GlobalGraphics.Scale(58+(9*15)+6))
                         {
                             // Toggle hidden verbose.
@@ -173,6 +164,12 @@ namespace Fleasociety
             // Interactable
             if(Debug.GetDebugMode())
             {
+                // Main Window
+                Texture2D mainwindow = GlobalContent.GetTexture("MainWindow");
+                spriteBatch.Draw(mainwindow, new Rectangle(GlobalGraphics.Scale(128-33), GlobalGraphics.Scale(36), GlobalGraphics.Scale(mainwindow.Width), GlobalGraphics.Scale(mainwindow.Height)), Color.White);
+                // Draw the center title bar text.
+                Vector2 titleSize = L.FontSmall().MeasureString(title);
+                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), title, new Vector2(GlobalGraphics.Scale(220) - titleSize.X / 2, GlobalGraphics.Scale(37)), Color.White);
                 DrawButton(spriteBatch, 137, 58, "Locale: " + L.GetLocale().name + " " + L.GetLocale().localizedName);
                 DrawButton(spriteBatch, 137, 58+(9*2), "User Resizing: " + (Frontend.instance != null && Frontend.instance.Window.AllowUserResizing ? "Enabled" : "Disabled"));
                 DrawButton(spriteBatch, 137, 58+(9*4), "Screen Scale: " + SaveData.saveValues["ScreenScale"]);
@@ -180,24 +177,25 @@ namespace Fleasociety
                 DrawButton(spriteBatch, 137, 58+(9*7), "Draw Offset: " + GlobalGraphics.drawOffset.X.ToString(CultureInfo.InvariantCulture) + ", " + GlobalGraphics.drawOffset.Y.ToString(CultureInfo.InvariantCulture));
                 DrawButton(spriteBatch, 137, 58+(9*10), "Theme: " + ThemeManager.activeTheme.name);
                 DrawButton(spriteBatch, 137, 58+(9*11), "Save");
-                DrawButton(spriteBatch, 137, 58+(9*13), (GlobalGraphics.fullScreen ? "Disable" : "Enable") + " Fullscreen");
                 DrawButton(spriteBatch, 137, 58+(9*15), (bool.Parse(SaveData.saveValues["HiddenVerbose"]) ? "Disable" : "Enable") + " Verbose");
                 DrawButton(spriteBatch, 137, 58+(9*17), "Open console.txt");
                 DrawButton(spriteBatch, 137, 58+(9*18), (Frontend.instance != null && Frontend.instance.IsFixedTimeStep ? "Unlock" : "Lock") + " FPS and VSync");
-                GlobalContent.DrawString(spriteBatch, L.FontSmall(), "CTRL+F3: Toggle Debug Mode", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41)), Color.White);
-                GlobalContent.DrawString(spriteBatch, L.FontSmall(), "F6: Pause", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*2)), Color.White);
-                GlobalContent.DrawString(spriteBatch, L.FontSmall(), "F7: Advance Frame", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*3)), Color.White);
-                GlobalContent.DrawString(spriteBatch, L.FontSmall(), "F8: Speed Boost", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*4)), Color.White);
-                GlobalContent.DrawString(spriteBatch, L.FontSmall(), "F9: Reload Locales", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*5)), Color.White);
-                GlobalContent.DrawString(spriteBatch, L.FontSmall(), "F10: Unload All Locales", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*6)), Color.White);
+                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "CTRL+F3: Toggle Debug Mode", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41)), Color.White);
+                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F6: Pause", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*2)), Color.White);
+                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F7: Advance Frame", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*3)), Color.White);
+                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F8: Speed Boost", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*4)), Color.White);
+                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F9: Reload Locales", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*5)), Color.White);
+                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F10: Unload All Locales", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*6)), Color.White);
             }
         }
         public void DrawButton(SpriteBatch spriteBatch, int x, int y, string text)
         {
-            GlobalGraphics.DrawButton(spriteBatch, GlobalGraphics.Scale(x), GlobalGraphics.Scale(y), Color.Transparent, text, Color.White, Color.Gray);
+            GlobalGraphics.DrawButton(spriteBatch, GlobalGraphics.Scale(x), GlobalGraphics.Scale(y), text);
         }
         public void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
         {
+            // Main Window
+            GlobalContent.AddTexture("MainWindow", ThemeManager.LoadLayeredContent<Texture2D>("graphics/mainwindow"));
         }
     }
 }

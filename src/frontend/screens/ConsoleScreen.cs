@@ -78,7 +78,7 @@ namespace Fleasociety
             // Draw the center title bar text.
             string newTitle = L.T(0, "Console:Title", L.T(0, "Console:TitleExtra"));
             Vector2 titleSize = L.FontSmall().MeasureString(newTitle);
-            GlobalContent.DrawString(spriteBatch, L.FontSmall(), newTitle, new Vector2(GlobalGraphics.scaledWidth / 2 - titleSize.X / 2, (6 * GlobalGraphics.scale) - GlobalGraphics.Scale(1)), Color.White);
+            GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), newTitle, new Vector2(GlobalGraphics.scaledWidth / 2 - titleSize.X / 2, (6 * GlobalGraphics.scale) - GlobalGraphics.Scale(1)), Color.White);
             // Draw lines.
             float lineHeight = 8 * GlobalGraphics.scale;
             float lineSpacing = 2 * GlobalGraphics.scale;
@@ -88,14 +88,14 @@ namespace Fleasociety
                 foreach (ColoredString line in ConsoleOutput.GetOutput())
                 {
                     Vector2 lineSize = L.FontSmall().MeasureString(line.Text);
-                    GlobalContent.DrawString(spriteBatch, L.FontSmall(), line.Text, new Vector2(GlobalGraphics.Scale(8), lineY), line.Color);
+                    GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), line.Text, new Vector2(GlobalGraphics.Scale(8), lineY), line.Color);
                     lineY += lineHeight;
                 }
             }
             catch {}
             // Draw assembly version.
             string version = L.T(0, "Console:Footer", Global.productVersion, ConsoleOutput.scrollAmount > -1 ? (ConsoleOutput.scrollAmount + 1).ToString(CultureInfo.InvariantCulture) : (ConsoleOutput.proxyOutput.Count - ConsoleOutput.maxLines + 1).ToString(CultureInfo.InvariantCulture), ConsoleOutput.proxyOutput.Count.ToString(CultureInfo.InvariantCulture));
-            GlobalContent.DrawString(spriteBatch, L.FontSmall(), version, new Vector2(GlobalGraphics.Scale(8), lineY), Color.White);
+            GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), version, new Vector2(GlobalGraphics.Scale(8), lineY), Color.White);
         }
         public void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
         {

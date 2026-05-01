@@ -75,8 +75,6 @@ namespace Fleasociety
             // Default to English
             if(!languageSet)
                 SaveData.saveValues["Locale"] = "english";
-            if(Global.parameters.Contains("-fullscreen"))
-                SaveData.saveValues["Fullscreen"] = "true";
             Global.productVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString() ?? "0.0.0.0";
             using (var game = new Frontend())
                 game.Run();

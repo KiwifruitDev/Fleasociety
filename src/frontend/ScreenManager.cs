@@ -63,24 +63,6 @@ namespace Fleasociety
             }
             GlobalContent.AddTexture("Cursor", ThemeManager.LoadLayeredContent<Texture2D>("graphics/cursor"));
         }
-        public static void PushNavigation(string name)
-        {
-            // Find the screen with the matching name.
-            IScreen? screen = null;
-            for(int i = 0; i < drawnScreens.Count; i++)
-            {
-                if(drawnScreens[i].title == name)
-                {
-                    screen = drawnScreens[i];
-                    break;
-                }
-            }
-            if(screen == null)
-            {
-                ConsoleOutput.WriteLine("Screen not found: " + name, Color.Red);
-                return;
-            }
-        }
         public static T? GetScreen<T>(string name) where T : IScreen
         {
             // Find the screen with the matching name.
@@ -130,12 +112,6 @@ namespace Fleasociety
             }
             if(Frontend.instance != null)
             {
-                // F11 or Alt+Enter will toggle fullscreen
-                if(Input.KeyboardState.IsKeyDown(Keys.F11) && Input.LastKeyboardState.IsKeyUp(Keys.F11)
-                    || Input.KeyboardState.IsKeyDown(Keys.LeftAlt) && Input.KeyboardState.IsKeyDown(Keys.Enter) && Input.LastKeyboardState.IsKeyUp(Keys.Enter))
-                {
-                    Frontend.instance.ToggleFullscreen();
-                }
                 // Alt+F4 will close the game
                 if(Input.KeyboardState.IsKeyDown(Keys.LeftAlt) && Input.KeyboardState.IsKeyDown(Keys.F4))
                 {

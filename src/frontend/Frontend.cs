@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Globalization;
 using MonoGame.Extended.Input;
-using MonoGameGum;
 
 namespace Fleasociety
 {
@@ -34,31 +33,6 @@ namespace Fleasociety
             _graphics.ApplyChanges();
             GlobalGraphics.preferredResolution = new Point(width, height);
         }
-        public void ToggleFullscreen()
-        {
-            SetFullscreen(!GlobalGraphics.fullScreen);
-        }
-        public void SetFullscreen(bool fullscreen)
-        {
-            AspectRatio aspectRatio = new();
-            if(SaveData.saveValues["MatchAspectRatio"] == "true")
-                aspectRatio = GlobalGraphics.FindMatchingAspectRatio();
-            GlobalGraphics.fullScreen = fullscreen;
-            // Borderless
-            Window.IsBorderless = fullscreen;
-            _graphics.HardwareModeSwitch = fullscreen;
-            if(fullscreen)
-            {
-                // Set preferred resolution to screen resolution.
-                aspectRatio.preferredResolution = new Point((int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Width / GlobalGraphics.scale), (int)(GraphicsAdapter.DefaultAdapter.CurrentDisplayMode.Height / GlobalGraphics.scale));
-                // Calculate draw offset into center of screen.
-                aspectRatio.drawOffset = new Vector2((aspectRatio.preferredResolution.X - (GlobalGraphics.scaledWidth / GlobalGraphics.scale)) / 2, (aspectRatio.preferredResolution.Y - (GlobalGraphics.scaledHeight / GlobalGraphics.scale)) / 2);
-            }
-            GlobalGraphics.SetAspectRatio(aspectRatio);
-            _graphics.ApplyChanges();
-            if(!fullscreen)
-                GlobalGraphics.SetAspectRatio(SaveData.saveValues["MatchAspectRatio"] == "true" ? GlobalGraphics.FindMatchingAspectRatio() : new AspectRatio());
-        }
         public void SetNativeCursor(bool useNativeCursor)
         {
             IsMouseVisible = useNativeCursor;
@@ -83,6 +57,7 @@ namespace Fleasociety
                 ConsoleOutput.WriteLine("Screen resolution set.", Color.Transparent);
             }
             ScreenManager.LoadScreens();
+            StationManager.LoadStations();
             ConsoleOutput.WriteLine("Initialization complete.", Color.Transparent);
             Window.AllowAltF4 = false;
             // match aspect ratio
@@ -90,9 +65,6 @@ namespace Fleasociety
             if (SaveData.saveValues["MatchAspectRatio"] == "true")
                 aspectRatio = GlobalGraphics.FindMatchingAspectRatio();
             GlobalGraphics.SetAspectRatio(aspectRatio);
-            // fullscreen
-            if (bool.Parse(SaveData.saveValues["Fullscreen"]))
-                SetFullscreen(true);
             // hide cursor
             SetNativeCursor(bool.Parse(SaveData.saveValues["UseNativeCursor"]));
             base.Initialize();
@@ -150,17 +122,11 @@ namespace Fleasociety
                     SpriteFont font = L.FontLarge();
                     string debugPaused = "Debug Paused";
                     Vector2 debugPausedSize = font.MeasureString(debugPaused);
-                    GlobalContent.DrawString(_spriteBatch, font, debugPaused, new Vector2(GlobalGraphics.preferredResolution.X-GlobalGraphics.Scale(8-1)-debugPausedSize.X, GlobalGraphics.Scale(8+1)), Color.Black);
-                    GlobalContent.DrawString(_spriteBatch, font, debugPaused, new Vector2(GlobalGraphics.preferredResolution.X-GlobalGraphics.Scale(8)-debugPausedSize.X, GlobalGraphics.Scale(8)), ThemeManager.GetColor("VideoPlayerProgressBar"));
+                    GlobalGraphics.DrawShadowedString(_spriteBatch, font, debugPaused, new Vector2(GlobalGraphics.preferredResolution.X-GlobalGraphics.Scale(8)-debugPausedSize.X, GlobalGraphics.Scale(8)), ThemeManager.GetColor("VideoPlayerProgressBar"));
                 }
                 _spriteBatch.End();
             }
             base.Draw(gameTime);
-        }
-        private void ClosingForm(object? sender, System.ComponentModel.CancelEventArgs e)
-        {
-            ExitGracefully();
-            e.Cancel = true;
         }
         public void ExitGracefully()
         {
@@ -169,15 +135,16 @@ namespace Fleasociety
                 Global.exiting = true;
                 // Exit page is always the last
                 Global.exitOpacityIncrease = 0.0075f;
-                Global.fakeExit = false;
+                Global.fakeExit = true;
                 GlobalContent.PlaySound("Quit");
                 ConsoleOutput.WriteLine("Exiting gracefully...", Color.Transparent);
             }
         }
         protected override void OnExiting(object sender, ExitingEventArgs args)
         {
-            if(Global.exiting)
+            if(!Global.exiting && !Global.fakeExit)
             {
+                ExitGracefully();
                 args.Cancel = true;
                 return;
             }

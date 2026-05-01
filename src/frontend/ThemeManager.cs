@@ -43,6 +43,8 @@ namespace Fleasociety
     {
         public static Theme Nonsensical = new Theme("Nonsensical", "The default theme.", "", new Dictionary<string, Color>() {
             {"ClearColor", new Color(0, 0, 0, 255)},
+            {"TextShadow", new Color(0, 0, 0, 255)},
+            {"Text", new Color(255, 255, 255, 255)},
             {"BackgroundTooltip", new Color(0, 0, 0, 255)},
             {"BackgroundConsoleScreen", new Color(0, 0, 0, 255)},
             {"BackgroundOverlayScreen", new Color(128, 128, 128, 255)},
