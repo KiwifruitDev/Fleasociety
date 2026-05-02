@@ -43,7 +43,7 @@ namespace Fleasociety
 #if DEBUG
             Debug.debugBuild = true;
 #endif
-            Debug.SetDebugMode(Debug.debugBuild || Global.parameters.Contains("-debug"));
+            Debug.SetDebugMode(Global.parameters.Contains("-debug"));
             // Disable anti-aliasing.
             _graphics.PreferMultiSampling = false;
             GraphicsDevice.SamplerStates[0] = SamplerState.PointClamp;

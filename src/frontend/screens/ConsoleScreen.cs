@@ -12,7 +12,7 @@ namespace Fleasociety
     public class ConsoleScreen : IScreen
     {
         public string title { get; } = "Console";
-        public int layer { get; set; } = 98;
+        public int layer { get; set; } = 5;
         private bool active = false;
         public bool Update(GameTime gameTime, bool handleInput)
         {

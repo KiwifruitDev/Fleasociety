@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Fleasociety
 {
+    // nvg engine object system!
     public interface IObject
     {
         public string title { get; }

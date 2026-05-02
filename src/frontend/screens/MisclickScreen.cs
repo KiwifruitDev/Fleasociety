@@ -80,7 +80,7 @@ namespace Fleasociety
             if(handleInput)
             {
                 // Detect clicks.
-                if (Input.LastMouseState.LeftButton == ButtonState.Released && Input.MouseState.LeftButton == ButtonState.Pressed) {
+                if (Input.MouseState.LeftButton == ButtonState.Released && Input.LastMouseState.LeftButton == ButtonState.Pressed) {
                     // Add a circle.
                     circles.Add(new MisclickCircle(new Vector2(Input.MouseState.X, Input.MouseState.Y)));
                 }
@@ -110,9 +110,19 @@ namespace Fleasociety
                 Rectangle circlePos = new Rectangle((int)circle.circleClick.X, (int)circle.circleClick.Y, circle.circleSize, circle.circleSize);
                 spriteBatch.Draw(circleTexture, circlePos, null, circleColor, MathHelper.ToRadians(circle.rotation), new Vector2(circleTexture.Width/2, circleTexture.Height/2), SpriteEffects.None, 0);
             }
+            if(Frontend.instance != null && !Frontend.instance.IsMouseVisible)
+            {
+                spriteBatch.Draw(GlobalContent.GetTexture("Cursor"), new Rectangle(Input.MouseState.Position.X - GlobalGraphics.Scale(4), Input.MouseState.Position.Y - GlobalGraphics.Scale(4), GlobalGraphics.Scale(32), GlobalGraphics.Scale(32)), Color.White);
+                Texture2D pixel = GlobalContent.GetTexture("Pixel");
+                bool clicking = Input.MouseState.LeftButton == ButtonState.Pressed;
+                HSVToRGB((int)hueColor, 100, clicking ? 50 : 100, out Color cursorColor);
+                spriteBatch.Draw(pixel, new Rectangle(Input.MouseState.Position.X, Input.MouseState.Position.Y, GlobalGraphics.Scale(2), GlobalGraphics.Scale(1)), cursorColor);
+                spriteBatch.Draw(pixel, new Rectangle(Input.MouseState.Position.X, Input.MouseState.Position.Y+GlobalGraphics.Scale(1), GlobalGraphics.Scale(1), GlobalGraphics.Scale(1)), cursorColor);
+            }
         }
         public void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
         {
+            GlobalContent.AddTexture("Cursor", ThemeManager.LoadLayeredContent<Texture2D>("graphics/cursor"));
             GlobalContent.AddTexture("MisclickCircle", ThemeManager.LoadLayeredContent<Texture2D>("graphics/misclick"));
         }
     }

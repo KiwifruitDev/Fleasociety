@@ -1,9 +1,11 @@
+using System.Drawing;
 using Microsoft.Xna.Framework.Input;
 
 namespace Fleasociety
 { 
     public static class Input
     {
+        public static Point startClick = new Point(0, 0);
         public static MouseState _mouseState;
         private static MouseState lastMouseState;
         public static MouseState MouseState
@@ -22,6 +24,11 @@ namespace Fleasociety
             overrideLastState = new MouseState(overrideLastState.X - oX, overrideLastState.Y - oY, overrideLastState.ScrollWheelValue, overrideLastState.LeftButton, overrideLastState.MiddleButton, overrideLastState.RightButton, overrideLastState.XButton1, overrideLastState.XButton2);
             overrideMouseState = new MouseState(overrideMouseState.X - oX, overrideMouseState.Y - oY, overrideMouseState.ScrollWheelValue, overrideMouseState.LeftButton, overrideMouseState.MiddleButton, overrideMouseState.RightButton, overrideMouseState.XButton1, overrideMouseState.XButton2);
             lastMouseState = overrideLastState;
+            // Set startClick when you click
+            if (overrideMouseState.LeftButton == ButtonState.Pressed && overrideLastState.LeftButton == ButtonState.Released)
+            {
+                startClick = new Point(overrideMouseState.X, overrideMouseState.Y);
+            }
             return overrideMouseState;
         }
         public static MouseState LastMouseState

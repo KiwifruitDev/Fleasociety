@@ -61,7 +61,6 @@ namespace Fleasociety
             {
                 drawnScreens[i].LoadContent(contentManager, graphicsDevice);
             }
-            GlobalContent.AddTexture("Cursor", ThemeManager.LoadLayeredContent<Texture2D>("graphics/cursor"));
         }
         public static T? GetScreen<T>(string name) where T : IScreen
         {
@@ -119,9 +118,8 @@ namespace Fleasociety
                 }
             }
             // Toggle debug mode
-            // CTRL+F3 will toggle debug mode
-            if(Input.KeyboardState.IsKeyDown(Keys.LeftControl) && Input.KeyboardState.IsKeyDown(Keys.F3)
-                && Input.LastKeyboardState.IsKeyUp(Keys.F3))
+            // F3 will toggle debug mode
+            if(Input.KeyboardState.IsKeyDown(Keys.F3) && Input.LastKeyboardState.IsKeyUp(Keys.F3))
             {
                 Debug.SetDebugMode(!Debug.GetDebugMode());
             }
@@ -173,8 +171,6 @@ namespace Fleasociety
             {
                 orderedScreens[i].Draw(gameTime, spriteBatch);
             }
-            if(Frontend.instance != null && !Frontend.instance.IsMouseVisible)
-                spriteBatch.Draw(GlobalContent.GetTexture("Cursor"), new Rectangle(Input.MouseState.Position.X - GlobalGraphics.Scale(4), Input.MouseState.Position.Y - GlobalGraphics.Scale(4), GlobalGraphics.Scale(32), GlobalGraphics.Scale(32)), Color.White);
         }
     }
 }

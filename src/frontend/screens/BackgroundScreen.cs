@@ -16,14 +16,14 @@ namespace Fleasociety
         /// </summary>
         public string title { get; } = "Background";
         public int layer { get; set; } = 0;
-        private static int totalCount = 2048; // TODO: Calculate this based on screen size.
+        private static int totalCount = 1024; // TODO: Calculate this based on screen size.
         public bool Update(GameTime gameTime, bool handleInput)
         {
             // Input.
             if(handleInput)
             {
                 // Detect clicks.
-                if (Input.LastMouseState.LeftButton == ButtonState.Released && Input.MouseState.LeftButton == ButtonState.Pressed) {
+                if (Input.MouseState.LeftButton == ButtonState.Released && Input.LastMouseState.LeftButton == ButtonState.Pressed) {
                     // Play a sound.
                     GlobalContent.PlaySound("Hover");
                     return true;
