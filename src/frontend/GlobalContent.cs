@@ -19,6 +19,7 @@ namespace Fleasociety
         private static Dictionary<string, SpriteFont> fonts = new Dictionary<string, SpriteFont>();
         private static Dictionary<SpriteFont, Vector2> fontOffsets = new Dictionary<SpriteFont, Vector2>();
         private static List<Song> songs = new List<Song>();
+        private static string lastPlayedSound = "";
         public static void LoadDefaultContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
         {
             // Dispose all existing content.
@@ -170,6 +171,10 @@ namespace Fleasociety
         {
             return sounds[name];
         }
+        public static Dictionary<string, SoundEffect> GetSounds()
+        {
+            return sounds;
+        }
         public static Texture2D GetTexture(string name)
         {
             // if texture doesn't exist, return a 1x1 white pixel.
@@ -197,6 +202,7 @@ namespace Fleasociety
         }
         public static void PlaySound(string name)
         {
+            lastPlayedSound = name;
             // Play sound if it exists.
             if (sounds.ContainsKey(name))
             {
@@ -210,7 +216,12 @@ namespace Fleasociety
             else
             {
                 ConsoleOutput.WriteLine($"Sound {name} not found.", Color.Red);
+                lastPlayedSound = lastPlayedSound + " (not found)";
             }
+        }
+        public static string GetLastPlayedSound()
+        {
+            return lastPlayedSound;
         }
     }
 }

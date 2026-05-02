@@ -13,11 +13,16 @@ namespace Fleasociety
     {
         public Ticket ticket;
         private static readonly Vector2 initialPosition = new Vector2(43, 4);
+        private static Vector2 ticketSize = new Vector2(0, 0);
         public Vector2 position = new Vector2(0, 0);
+        private Vector2 grabOffset = new Vector2(0, 0);
+        private bool grabbing = false;
+        private static Texture2D? pixel = null;
         private static Texture2D? gfxTicket = null;
         private static Texture2D? gfxTicket1 = null;
         private static Texture2D? gfxTicket2 = null;
         private static Color ticketColor = Color.White;
+        private static Color ticketShadowColor = Color.Black;
 
         public TicketObject(Ticket ticket)
         {
@@ -29,28 +34,57 @@ namespace Fleasociety
         }
         public bool Update(GameTime gameTime, bool handleInput)
         {
-            return false;
+            if(!handleInput)
+            {
+                return false;
+            }
+            Vector2 rescaledMousePos = Input.MouseState.Position.ToVector2() / GlobalGraphics.scale;
+            if (Input.MouseState.LeftButton == ButtonState.Pressed)
+            {
+                if (!grabbing && GlobalGraphics.Scale(new Rectangle((int)position.X, (int)position.Y, (int)ticketSize.X, (int)ticketSize.Y)).Contains(Input.MouseState.Position))
+                {
+                    grabbing = true;
+                    grabOffset = rescaledMousePos - position;
+                    GlobalContent.PlaySound("Option");
+                }
+            }
+            // If grabbing, move the ticket with the mouse.
+            if (grabbing)
+            {
+                position = rescaledMousePos - grabOffset;
+
+                // Stop grabbing if the mouse button is released.
+                if (Input.MouseState.LeftButton == ButtonState.Released)
+                {
+                    grabbing = false;
+                }
+            }
+            return grabbing;
         }
         public void DrawLayer1(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (gfxTicket2 == null)
                 return;
-            spriteBatch.Draw(gfxTicket2, GlobalGraphics.Scale(new Rectangle(43 + gfxTicket1.Bounds.Size.X, 4, gfxTicket2.Bounds.Width, gfxTicket2.Bounds.Height)), ticketColor);
+            spriteBatch.Draw(pixel, GlobalGraphics.Scale(new Rectangle((int)position.X, (int)position.Y, (int)(ticketSize.X + 1), (int)(ticketSize.Y + 1))), ticketShadowColor);
+            spriteBatch.Draw(gfxTicket2, GlobalGraphics.Scale(new Rectangle((int)position.X + gfxTicket1.Bounds.Size.X, (int)position.Y, gfxTicket2.Bounds.Width, gfxTicket2.Bounds.Height)), ticketColor);
         }
         public void DrawLayer2(GameTime gameTime, SpriteBatch spriteBatch)
         {
             if (gfxTicket == null
                 || gfxTicket1 == null)
                 return;
-            spriteBatch.Draw(gfxTicket1, GlobalGraphics.Scale(new Rectangle(43, 4, gfxTicket1.Bounds.Width, gfxTicket1.Bounds.Height)), ticketColor);
-            spriteBatch.Draw(gfxTicket, GlobalGraphics.Scale(new Rectangle(43, 12, gfxTicket.Bounds.Width, gfxTicket.Bounds.Height)), ticketColor);
+            spriteBatch.Draw(gfxTicket1, GlobalGraphics.Scale(new Rectangle((int)position.X, (int)position.Y, gfxTicket1.Bounds.Width, gfxTicket1.Bounds.Height)), ticketColor);
+            spriteBatch.Draw(gfxTicket, GlobalGraphics.Scale(new Rectangle((int)position.X, (int)position.Y + gfxTicket1.Bounds.Height, gfxTicket.Bounds.Width, gfxTicket.Bounds.Height)), ticketColor);
         }
         public static void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
         {
+            pixel = GlobalContent.GetTexture("Pixel");
             gfxTicket = GlobalContent.AddTexture("Ticket", ThemeManager.LoadLayeredContent<Texture2D>("graphics/ticket"));
             gfxTicket1 = GlobalContent.AddTexture("Ticket1", ThemeManager.LoadLayeredContent<Texture2D>("graphics/ticket1"));
             gfxTicket2 = GlobalContent.AddTexture("Ticket2", ThemeManager.LoadLayeredContent<Texture2D>("graphics/ticket2"));
             ticketColor = ThemeManager.GetColor("OrderStationTicket");
+            ticketShadowColor = ThemeManager.GetColor("OrderStationTicketShadow");
+            ticketSize = new Vector2(gfxTicket.Bounds.Width, gfxTicket.Bounds.Height + gfxTicket1.Bounds.Height);
         }
     }
     public class TicketScreen : IScreen {
@@ -67,6 +101,14 @@ namespace Fleasociety
             {
                 tickets.Add(new TicketObject(new Ticket() { customerId = 0 }));
                 tickets[tickets.Count - 1].Initialize();
+                GlobalContent.PlaySound("Disambiguation");
+            }
+            for (int i = 0; i < tickets.Count; i++)
+            {
+                if(tickets[i].Update(gameTime, handleInput))
+                {
+                    break;
+                }
             }
             return false;
         }

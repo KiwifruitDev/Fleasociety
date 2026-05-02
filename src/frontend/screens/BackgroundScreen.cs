@@ -19,16 +19,6 @@ namespace Fleasociety
         private static int totalCount = 1024; // TODO: Calculate this based on screen size.
         public bool Update(GameTime gameTime, bool handleInput)
         {
-            // Input.
-            if(handleInput)
-            {
-                // Detect clicks.
-                if (Input.MouseState.LeftButton == ButtonState.Released && Input.LastMouseState.LeftButton == ButtonState.Pressed) {
-                    // Play a sound.
-                    GlobalContent.PlaySound("Hover");
-                    return true;
-                }
-            }
             return false;
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)

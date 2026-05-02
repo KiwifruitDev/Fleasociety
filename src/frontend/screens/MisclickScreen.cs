@@ -80,7 +80,8 @@ namespace Fleasociety
             if(handleInput)
             {
                 // Detect clicks.
-                if (Input.MouseState.LeftButton == ButtonState.Released && Input.LastMouseState.LeftButton == ButtonState.Pressed) {
+                if ((Input.LastMouseState.LeftButton == ButtonState.Released && Input.MouseState.LeftButton == ButtonState.Pressed)
+                    || (Input.MouseState.LeftButton == ButtonState.Released && Input.LastMouseState.LeftButton == ButtonState.Pressed)) {
                     // Add a circle.
                     circles.Add(new MisclickCircle(new Vector2(Input.MouseState.X, Input.MouseState.Y)));
                 }

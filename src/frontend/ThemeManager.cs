@@ -54,6 +54,7 @@ namespace Fleasociety
             {"OrderStationTicket", new Color(255, 255, 255, 255)},
             {"OrderStationTicketHolders", new Color(255, 255, 255, 255)},
             {"OrderStationTicketHolders2", new Color(255, 255, 255, 255)},
+            {"OrderStationTicketShadow", new Color(0, 0, 0, 128)},
         });
         public static Theme Anniversary = new Theme("Anniversary", "Celebrate NVG's anniversary!", "themes/anniversary/", new Dictionary<string, Color>() {});
         public static Theme Spooky = new Theme("Spooky", "Trick or treat!", "themes/halloween/", new Dictionary<string, Color>() {

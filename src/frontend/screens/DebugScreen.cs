@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Input;
 using System.Globalization;
 using System;
 using System.Linq;
+using System.Collections.Generic;
+using Microsoft.Xna.Framework.Audio;
 
 namespace Fleasociety
 {
@@ -17,6 +19,7 @@ namespace Fleasociety
     {
         public string title { get; set; } = "Debug";
         public int layer { get; set; } = 6;
+        private int soundTest = 0;
         public bool Update(GameTime gameTime, bool handleInput)
         {
             if(Debug.GetDebugMode())
@@ -155,6 +158,21 @@ namespace Fleasociety
                                 Frontend.instance.SetFPSUnlock(Frontend.instance.IsFixedTimeStep);
                             return true;
                         }
+                        if (Input.MouseState.Y >= GlobalGraphics.Scale(58+(9*10)) && Input.MouseState.Y <= GlobalGraphics.Scale(58+(9*10)+6))
+                        {
+                            // Sound test.
+                            soundTest++;
+                            Dictionary<string, SoundEffect> sounds = GlobalContent.GetSounds();
+                            if (sounds.Count > 0)
+                            {
+                                List<string> keys = sounds.Keys.ToList();
+                                if (soundTest >= keys.Count)
+                                    soundTest = 0;
+                                string soundName = keys[soundTest % keys.Count];
+                                GlobalContent.PlaySound(soundName);
+                            }
+                            return true;
+                        }
                     }
                 }
             }
@@ -175,12 +193,15 @@ namespace Fleasociety
                 GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), (bool.Parse(SaveData.saveValues["HiddenVerbose"]) ? "Disable" : "Enable") + " Verbose", GlobalGraphics.Scale(new Vector2(137, 58-4+(9*7))), Color.White);
                 GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "Open console.txt", GlobalGraphics.Scale(new Vector2(137, 58-4+(9*8))), Color.White);
                 GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), (Frontend.instance != null && Frontend.instance.IsFixedTimeStep ? "Unlock" : "Lock") + " FPS and VSync", GlobalGraphics.Scale(new Vector2(137, 58-4+(9*9))), Color.White);
+                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "Sound test: " + soundTest.ToString(CultureInfo.InvariantCulture), GlobalGraphics.Scale(new Vector2(137, 58-4+(9*10))), Color.White);
+
                 GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F3: Toggle Debug Mode", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41)), Color.White);
                 GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F6: Pause", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8)), Color.White);
                 GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F7: Advance Frame", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*2)), Color.White);
                 GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F8: Speed Boost", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*3)), Color.White);
                 GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F9: Reload Locales", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*4)), Color.White);
                 GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "F10: Unload All Locales", new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(41) + GlobalGraphics.Scale(8*5)), Color.White);
+                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontLarge(), "Last SFX: " + GlobalContent.GetLastPlayedSound(), new Vector2(GlobalGraphics.Scale(6), GlobalGraphics.Scale(42) + GlobalGraphics.Scale(8*6)), Color.White);
             }
         }
         public void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
