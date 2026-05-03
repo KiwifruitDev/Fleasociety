@@ -162,14 +162,14 @@ namespace Fleasociety
                             fontSmall = localizationTokens["Metadata"]["FontSmall"];
                         }
                     }
-                    Dictionary<string, string> keyValues = new Dictionary<string, string>();
-                    if (localizationTokens.ContainsKey("KeyValues"))
+                    Dictionary<string, string> locale = new Dictionary<string, string>();
+                    if (localizationTokens.ContainsKey("Locale"))
                     {
-                        keyValues = localizationTokens["KeyValues"];
+                        locale = localizationTokens["Locale"];
                     }
                     int tokenCount = 0;
                     // Don't count "" or "[ ]" as tokens.
-                    foreach (KeyValuePair<string, string> token in keyValues)
+                    foreach (KeyValuePair<string, string> token in locale)
                     {
                         if (token.Value != "" && token.Value != "[ ]" && token.Value != " ")
                         {
@@ -187,7 +187,7 @@ namespace Fleasociety
                             percentageComplete = (float)tokenCount / (float)defaultTokenCount;
                         }
                     }
-                    locales.Add(new Locale(name, localizedName, keyValues, fontLarge, fontSmall, tokenCount, percentageComplete));
+                    locales.Add(new Locale(name, localizedName, locale, fontLarge, fontSmall, tokenCount, percentageComplete));
                     localeIndex = locales.Count - 1;
                 }
                 catch (Exception e)

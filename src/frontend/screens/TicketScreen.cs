@@ -5,10 +5,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 namespace Fleasociety
 {
-    public class Ticket
-    {
-        public byte customerId;
-    }
     public class TicketObject
     {
         // Constants
@@ -37,9 +33,6 @@ namespace Fleasociety
         public TicketObject(Ticket ticket)
         {
             this.ticket = ticket;
-        }
-        public void Initialize()
-        {
             position = initialPosition;
             animating = true;
         }
@@ -131,7 +124,7 @@ namespace Fleasociety
             if (gfxTicket2 == null)
                 return;
             spriteBatch.Draw(pixel, GlobalGraphics.Scale(new Rectangle((int)position.X, (int)position.Y, (int)(ticketSize.X + 1), (int)(ticketSize.Y + 1))), ticketShadowColor);
-            spriteBatch.Draw(gfxTicket2, GlobalGraphics.Scale(new Rectangle((int)position.X + gfxTicket1.Bounds.Size.X, (int)position.Y, gfxTicket2.Bounds.Width, gfxTicket2.Bounds.Height)), ticketColor);
+            spriteBatch.Draw(gfxTicket2, GlobalGraphics.Scale(new Rectangle((int)position.X + gfxTicket2.Bounds.Size.X, (int)position.Y, gfxTicket2.Bounds.Width, gfxTicket2.Bounds.Height)), ticketColor);
         }
         public void DrawLayer2(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -167,7 +160,8 @@ namespace Fleasociety
             return position;
         }
     }
-    public class TicketScreen : IScreen {
+    public class TicketScreen : IScreen
+    {
         public string title { get; set; } = "Tickets";
         public int layer { get; set; } = 4;
         private List<TicketObject> tickets = new List<TicketObject>();
@@ -179,8 +173,7 @@ namespace Fleasociety
             // space bar -> add a ticket for testing.
             if(handleInput && Input.KeyboardState.IsKeyDown(Keys.Space) && Input.LastKeyboardState.IsKeyUp(Keys.Space))
             {
-                tickets.Add(new TicketObject(new Ticket() { customerId = (byte)(tickets.Count % 256) }));
-                tickets[tickets.Count - 1].Initialize();
+                tickets.Add(new TicketObject(new Ticket((byte)(tickets.Count % 256))));
                 GlobalContent.PlaySound("Disambiguation");
             }
             for (int i = tickets.Count - 1; i >= 0; i--)

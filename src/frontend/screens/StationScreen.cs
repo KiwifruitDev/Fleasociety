@@ -5,7 +5,8 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 namespace Fleasociety
 {
-    public class StationScreen : IScreen {
+    public class StationScreen : IScreen
+    {
         public string title { get; set; } = "Stations";
         public int layer { get; set; } = 3;
         private int stationHeight = 35;

@@ -4,7 +4,7 @@
         "FontLarge": "Munro",
         "FontSmall": "MunroSmall"
     },
-    "KeyValues": {
+    "Locale": {
         "Console:Title": "Console%1",
         "Console:TitleExtra": " - Toggle with F5",
         "Console:Footer": "- v%1 - View full output in console.txt - Line %2/%3 -",
