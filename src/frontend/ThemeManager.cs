@@ -45,7 +45,7 @@ namespace Fleasociety
             {"ClearColor", new Color(0, 0, 0, 255)},
             {"TextShadow", new Color(0, 0, 0, 255)},
             {"Text", new Color(255, 255, 255, 255)},
-            {"BackgroundTooltip", new Color(0, 0, 0, 255)},
+            {"BackgroundTooltip", new Color(0, 0, 0, 128)},
             {"BackgroundConsoleScreen", new Color(0, 0, 0, 255)},
             {"BackgroundOverlayScreen", new Color(128, 128, 128, 255)},
             {"BackgroundScreen", new Color(64, 64, 64, 255)},

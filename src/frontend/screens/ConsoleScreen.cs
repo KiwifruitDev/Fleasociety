@@ -76,7 +76,7 @@ namespace Fleasociety
             Texture2D pixel = GlobalContent.GetTexture("Pixel");
             spriteBatch.Draw(pixel, new Rectangle(0, 0, GlobalGraphics.scaledWidth, GlobalGraphics.scaledHeight), ThemeManager.GetColor("BackgroundConsoleScreen"));
             // Draw the center title bar text.
-            string newTitle = L.T(0, "Console:Title", L.T(0, "Console:TitleExtra"));
+            string newTitle = L.T("Console:Title", L.T("Console:TitleExtra"));
             Vector2 titleSize = L.FontSmall().MeasureString(newTitle);
             GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), newTitle, new Vector2(GlobalGraphics.scaledWidth / 2 - titleSize.X / 2, (6 * GlobalGraphics.scale) - GlobalGraphics.Scale(1)), Color.White);
             // Draw lines.
@@ -94,7 +94,7 @@ namespace Fleasociety
             }
             catch {}
             // Draw assembly version.
-            string version = L.T(0, "Console:Footer", Global.productVersion, ConsoleOutput.scrollAmount > -1 ? (ConsoleOutput.scrollAmount + 1).ToString(CultureInfo.InvariantCulture) : (ConsoleOutput.proxyOutput.Count - ConsoleOutput.maxLines + 1).ToString(CultureInfo.InvariantCulture), ConsoleOutput.proxyOutput.Count.ToString(CultureInfo.InvariantCulture));
+            string version = L.T("Console:Footer", Global.productVersion, ConsoleOutput.scrollAmount > -1 ? (ConsoleOutput.scrollAmount + 1).ToString(CultureInfo.InvariantCulture) : (ConsoleOutput.proxyOutput.Count - ConsoleOutput.maxLines + 1).ToString(CultureInfo.InvariantCulture), ConsoleOutput.proxyOutput.Count.ToString(CultureInfo.InvariantCulture));
             GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), version, new Vector2(GlobalGraphics.Scale(8), lineY), Color.White);
         }
         public void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)

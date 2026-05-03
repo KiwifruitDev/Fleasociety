@@ -45,7 +45,7 @@ namespace Fleasociety
                     string tooltip = Global.tooltip;
                     Vector2 tooltipSize = spriteFont.MeasureString(tooltip);
                     // Position is relative to mouse position but tries to avoid going off screen
-                    Vector2 position = new(Input.MouseState.Position.X + 16, Input.MouseState.Position.Y + 16);
+                    Vector2 position = new(Input.MouseState.Position.X + 20, Input.MouseState.Position.Y + 18);
                     // Make sure it doesn't go off the right side of the screen
                     if (position.X + tooltipSize.X + GlobalGraphics.Scale(6) > GlobalGraphics.scaledWidth)
                         position.X = GlobalGraphics.scaledWidth - tooltipSize.X - GlobalGraphics.Scale(6);

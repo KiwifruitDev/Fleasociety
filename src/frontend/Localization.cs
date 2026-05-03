@@ -14,16 +14,16 @@ namespace Fleasociety
         public string localizedName { get; set; } = "Unknown";
         public string fontLarge { get; set; } = "Munro";
         public string fontSmall { get; set; } = "MunroSmall";
-        public List<Dictionary<string, string>> localizationTokens { get; set; } = new List<Dictionary<string, string>>();
+        public Dictionary<string, string> localizationTokens { get; set; } = new Dictionary<string, string>();
         public float percentageComplete { get; set; } = 0;
         public int totalTokens { get; set; } = 0;
-        public Locale(string name, string localizedName, List<Dictionary<string, string>>? localizationTokens = null, string fontLarge = "Munro", string fontSmall = "MunroSmall", int totalTokens = 0, float percentageComplete = 0)
+        public Locale(string name, string localizedName, Dictionary<string, string>? localizationTokens = null, string fontLarge = "Munro", string fontSmall = "MunroSmall", int totalTokens = 0, float percentageComplete = 0)
         {
             this.name = name;
             this.localizedName = localizedName;
             this.fontLarge = fontLarge;
             this.fontSmall = fontSmall;
-            this.localizationTokens = localizationTokens ?? new List<Dictionary<string, string>>();
+            this.localizationTokens = localizationTokens ?? new Dictionary<string, string>();
             this.totalTokens = totalTokens;
             this.percentageComplete = percentageComplete;
         }
@@ -41,7 +41,6 @@ namespace Fleasociety
         public static string invalid { get; set; } = "%1";
         public static string defaultLocale { get; set; } = "english";
         public static string localeFolder { get; set; } = "locales";
-        public static int maxVersion { get; set; } = 0;
         public static Locale GetLocale()
         {
             if(locales.Count == 0)
@@ -52,30 +51,24 @@ namespace Fleasociety
         }
 
         // String translation with optional %1, %2, etc. placeholders.
-        public static string T(int version, string text, params string[] args)
+        public static string T(string text, params string[] args)
         {
             Locale locale = GetLocale();
             int curLocaleIndex = localeIndex;
             string? result = text;
-            // Version is used to ensure updated strings are used.
             if (curLocaleIndex >= 0 && curLocaleIndex < locales.Count)
             {
-                if (version >= 0 && version <= maxVersion)
+                if (locale.localizationTokens.ContainsKey(text))
                 {
-                    if (locale.localizationTokens.Count > version
-                        && locale.localizationTokens[version].ContainsKey(text))
-                    {
-                        result = locale.localizationTokens[version][text];
-                    }
+                    result = locale.localizationTokens[text];
                 }
             }
             // Fall back to default locale if translation is missing.
             if (result == text && locales.Count > 1)
             {
-                if (locales[1].localizationTokens.Count > version
-                    && locales[1].localizationTokens[version].ContainsKey(text))
+                if (locales[1].localizationTokens.ContainsKey(text))
                 {
-                    result = locales[1].localizationTokens[version][text];
+                    result = locales[1].localizationTokens[text];
                 }
             }
             // Fall back to invalid string if translation is missing.
@@ -169,28 +162,18 @@ namespace Fleasociety
                             fontSmall = localizationTokens["Metadata"]["FontSmall"];
                         }
                     }
-                    List<Dictionary<string, string>> localizationList = new List<Dictionary<string, string>>();
-                    for (int i = 0; i <= maxVersion; i++)
+                    Dictionary<string, string> keyValues = new Dictionary<string, string>();
+                    if (localizationTokens.ContainsKey("KeyValues"))
                     {
-                        if (localizationTokens.ContainsKey($"Version{i}"))
-                        {
-                            localizationList.Add(localizationTokens[$"Version{i}"]);
-                        }
-                        else
-                        {
-                            localizationList.Add(new Dictionary<string, string>());
-                        }
+                        keyValues = localizationTokens["KeyValues"];
                     }
                     int tokenCount = 0;
-                    foreach (Dictionary<string, string> version in localizationList)
+                    // Don't count "" or "[ ]" as tokens.
+                    foreach (KeyValuePair<string, string> token in keyValues)
                     {
-                        // Don't count "" or "[ ]" as tokens.
-                        foreach (KeyValuePair<string, string> token in version)
+                        if (token.Value != "" && token.Value != "[ ]" && token.Value != " ")
                         {
-                            if (token.Value != "" && token.Value != "[ ]" && token.Value != " ")
-                            {
-                                tokenCount++;
-                            }
+                            tokenCount++;
                         }
                     }
                     float percentageComplete = 1f;
@@ -204,7 +187,7 @@ namespace Fleasociety
                             percentageComplete = (float)tokenCount / (float)defaultTokenCount;
                         }
                     }
-                    locales.Add(new Locale(name, localizedName, localizationList, fontLarge, fontSmall, tokenCount, percentageComplete));
+                    locales.Add(new Locale(name, localizedName, keyValues, fontLarge, fontSmall, tokenCount, percentageComplete));
                     localeIndex = locales.Count - 1;
                 }
                 catch (Exception e)
