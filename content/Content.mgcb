@@ -81,6 +81,18 @@
 /processorParam:TextureFormat=Color
 /build:graphics/cursor.png
 
+#begin graphics/customers/kiwano.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:graphics/customers/kiwano.png
+
 #begin graphics/mainwindow.png
 /importer:TextureImporter
 /processor:TextureProcessor

@@ -9,7 +9,7 @@ namespace Fleasociety
     {
         public string title { get; set; } = "Stations";
         public int layer { get; set; } = 3;
-        private int stationHeight = 35;
+        private int stationHeight = 24;
         public bool Update(GameTime gameTime, bool handleInput)
         {
             return StationManager.Update(gameTime, handleInput);

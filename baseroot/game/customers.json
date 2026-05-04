@@ -1,8 +1,9 @@
 {
     "Customers": [
         {
-            "CustomerId": 1,
-            "Name": "Kiwano"
+            "Id": 1,
+            "Name": "Kiwano",
+            "Type": "Regular"
         }
     ]
 }

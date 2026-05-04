@@ -1,39 +1,59 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Microsoft.Xna.Framework;
 using Newtonsoft.Json;
 
 namespace Fleasociety
 {
+    public enum CustomerType
+    {
+        Regular
+    }
     public class Customer
     {
-        public byte customerId;
-        public string name;
-        public Customer(byte customerId, string name)
+        public byte Id;
+        public string Name;
+        public CustomerType Type;
+        public Customer(byte customerId, string customerName, CustomerType customerType)
         {
-            this.customerId = customerId;
-            this.name = name;
+            Id = customerId;
+            Name = customerName;
+            Type = customerType;
         }
     }
     public static class CustomerManager
     {
         private readonly static string customersFile = "game/customers.json";
-        private static Customer dummyCustomer = new Customer(0, "Dummy");
-        private static List<Customer> customers = new List<Customer>()
-        {
-            dummyCustomer
-        };
-        public static void AddCustomer(Customer customer)
-        {
-            customers.Add(customer);
-        }
+
+        // Fallback customer if a customer is not found.
+        private static Customer dummyCustomer = new Customer(0, "Dummy", CustomerType.Regular);
+
+        private static List<Customer> customers = new List<Customer>();
+
         public static Customer GetCustomer(byte customerId)
         {
-            return customers.Find(c => c.customerId == customerId) ?? dummyCustomer;
+            Customer? customer = customers.Find(c => c.Id == customerId);
+            if (customer == null)
+            {
+                ConsoleOutput.WriteLine($"Customer with ID {customerId} not found!");
+                return dummyCustomer;
+            }
+            return customer;
         }
         public static Customer GetCustomer(string name)
         {
-            return customers.Find(c => c.name == name) ?? dummyCustomer;
+            Customer? customer = customers.Find(c => c.Name == name);
+            if (customer == null)
+            {
+                ConsoleOutput.WriteLine($"Customer with name {name} not found!");
+                return dummyCustomer;
+            }
+            return customer;
+        }
+        public static List<Customer> GetAllCustomers()
+        {
+            return customers;
         }
         public static void LoadCustomers()
         {
@@ -45,7 +65,12 @@ namespace Fleasociety
                 if (data != null && data.ContainsKey("Customers"))
                 {
                     customers = data["Customers"];
+                    ConsoleOutput.WriteLine($"Loaded {customers.Count} customers.", Color.Green);
                 }
+            }
+            if (customers.Count == 0)
+            {
+                ConsoleOutput.WriteLine("No customers loaded!", Color.Red);
             }
         }
     }

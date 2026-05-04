@@ -45,19 +45,6 @@ namespace Fleasociety
             // Interactable
             if(Debug.GetDebugMode())
             {
-                /*
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "Locale: " + L.GetLocale().name + " " + L.GetLocale().localizedName,  GlobalGraphics.Scale(new Vector2(137, 58-4)), Color.White);
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "User Resizing: " + (Frontend.instance != null && Frontend.instance.Window.AllowUserResizing ? "Enabled" : "Disabled"), GlobalGraphics.Scale(new Vector2(137, 58-4+9)), Color.White);
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "Screen Scale: " + SaveData.saveValues["ScreenScale"], GlobalGraphics.Scale(new Vector2(137, 58-4+(9*2))), Color.White);
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "Speed Boost: x" + Debug.debugSpeedBoost, GlobalGraphics.Scale(new Vector2(137, 58-4+(9*3))), Color.White);
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "Draw Offset: " + GlobalGraphics.drawOffset.X.ToString(CultureInfo.InvariantCulture) + ", " + GlobalGraphics.drawOffset.Y.ToString(CultureInfo.InvariantCulture), GlobalGraphics.Scale(new Vector2(137, 58-4+(9*4))), Color.White);
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "Theme: " + ThemeManager.activeTheme.name, GlobalGraphics.Scale(new Vector2(137, 58-4+(9*5))), Color.White);
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "Save", GlobalGraphics.Scale(new Vector2(137, 58-4+(9*6))), Color.White);
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), (bool.Parse(SaveData.saveValues["HiddenVerbose"]) ? "Disable" : "Enable") + " Verbose", GlobalGraphics.Scale(new Vector2(137, 58-4+(9*7))), Color.White);
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "Open console.txt", GlobalGraphics.Scale(new Vector2(137, 58-4+(9*8))), Color.White);
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), (Frontend.instance != null && Frontend.instance.IsFixedTimeStep ? "Unlock" : "Lock") + " FPS and VSync", GlobalGraphics.Scale(new Vector2(137, 58-4+(9*9))), Color.White);
-                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), "Sound test: " + soundTest.ToString(CultureInfo.InvariantCulture), GlobalGraphics.Scale(new Vector2(137, 58-4+(9*10))), Color.White);
-                */
                 for (int i = 0; i < Debug.GetDebugButtons().Count; i++)
                 {
                     GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), Debug.GetDebugButtons()[i].GetText(), GlobalGraphics.Scale(new Vector2(137, 58-4+(9*i))), Color.White);

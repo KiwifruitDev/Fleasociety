@@ -58,6 +58,7 @@ namespace Fleasociety
             }
             ScreenManager.LoadScreens();
             StationManager.LoadStations();
+            CustomerManager.LoadCustomers();
             ConsoleOutput.WriteLine("Initialization complete.", Color.Transparent);
             Window.AllowAltF4 = false;
             // match aspect ratio
