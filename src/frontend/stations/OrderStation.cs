@@ -8,13 +8,15 @@ namespace Fleasociety
 {
     public class OrderStation : IStation
     {
-        public string title { get; set; } = "Stations";
+        public string title { get; set; } = "Order Station";
+        public int order { get; set; } = 0;
         public bool attention { get; set; } = false;
+        public Color color { get; set; } = Color.Green;
         public bool Update(GameTime gameTime, bool handleInput)
         {
-            bool handle = CustomerManager.Update(gameTime, handleInput);
             // press enter to add a customer for testing
-            if (handle)
+            bool handled = CustomerManager.Update(gameTime, handleInput);
+            if (handleInput && !handled)
             {
                 if(Keyboard.GetState().IsKeyDown(Keys.Enter) && Input.LastKeyboardState.IsKeyUp(Keys.Enter))
                 {
@@ -25,7 +27,7 @@ namespace Fleasociety
                     return true;
                 }
             }
-            return handle;
+            return handled;
         }
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

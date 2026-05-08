@@ -84,8 +84,6 @@ namespace Fleasociety
             }
             // Reset the color
             bgColor = ThemeManager.GetColor("BackgroundOverlayScreen");
-            if(!handleInput)
-                return false;
             return false;
         }
         public void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)

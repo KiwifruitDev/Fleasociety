@@ -32,7 +32,7 @@ namespace Fleasociety
                                 && Input.startClick.Y >= GlobalGraphics.Scale(58 + (i * 9)) && Input.startClick.Y <= GlobalGraphics.Scale(58 + (i * 9) + 9))
                             {
                                 Debug.GetDebugButtons()[i].Click();
-                                break;
+                                return true;
                             }
                         }
                     }

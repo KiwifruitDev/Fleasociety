@@ -13,6 +13,9 @@ namespace Fleasociety
     {
         public static List<IStation> stations = new List<IStation>();
         public static int activeStationIndex = 0;
+        private static Texture2D? stationButton;
+        private static Texture2D? stationButtonSelected;
+        private static Texture2D? pixel;
         public static void LoadStations()
         {
             // Clear existing stations.
@@ -55,13 +58,8 @@ namespace Fleasociety
                     stations.Add(station);
                 }
             }
-        }
-        public static void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
-        {
-            for(int i = 0; i < stations.Count; i++)
-            {
-                stations[i].LoadContent(contentManager, graphicsDevice);
-            }
+            // Order stations
+            stations = stations.OrderBy(s => s.order).ToList();
         }
         public static void SetActiveStation(string name)
         {
@@ -113,11 +111,32 @@ namespace Fleasociety
         {
             // Update the currently active station.
             IStation? activeStation = stations[activeStationIndex];
+            bool handled = !handleInput;
             if(activeStation != null)
             {
-                return activeStation.Update(gameTime, handleInput);
+                handled = activeStation.Update(gameTime, !handled);
             }
-            return handleInput;
+            if(!handled)
+            {
+                if(Input.MouseState.Y >= GlobalGraphics.Scale(216))
+                {
+                    int addX = 81;
+                    for(int i = 0; i < stations.Count(); i++)
+                    {
+                        Rectangle buttonBounds = GlobalGraphics.Scale(new Rectangle(6+(addX*i), 217, 65, 22));
+                        if(buttonBounds.Contains(Input.startClick)
+                            && buttonBounds.Contains(Input.MouseState.Position)
+                            && Input.LastMouseState.LeftButton == ButtonState.Pressed
+                            && Input.MouseState.LeftButton == ButtonState.Released)
+                        {
+                            activeStationIndex = i;
+                            GlobalContent.PlaySound("Option");
+                            return true;
+                        }
+                    }
+                }
+            }
+            return handled;
         }
         public static void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -127,6 +146,33 @@ namespace Fleasociety
             {
                 activeStation.Draw(gameTime, spriteBatch);
             }
+            if(pixel == null && stationButton == null && stationButtonSelected == null)
+                return;
+            int addX = 81;
+            spriteBatch.Draw(pixel, GlobalGraphics.Scale(new Rectangle(0, 216, 320, 24)), Color.White);
+            for(int i = 0; i < stations.Count(); i++)
+            {
+                spriteBatch.Draw(pixel, GlobalGraphics.Scale(new Rectangle(8+(addX*i), 219, 61, 18)), stations[i].color);
+                Rectangle buttonBounds = GlobalGraphics.Scale(new Rectangle(6+(addX*i), 217, 65, 22));
+                spriteBatch.Draw(stationButton, buttonBounds, Color.White);
+                GlobalGraphics.DrawShadowedString(spriteBatch, L.FontSmall(), stations[i].title, GlobalGraphics.Scale(new Vector2(11+(addX*i), 221)));
+                if(activeStationIndex == i)
+                    spriteBatch.Draw(stationButtonSelected, buttonBounds, Color.White);
+                if(buttonBounds.Contains(Input.MouseState.Position))
+                {
+                    Global.tooltip = stations[i].title;
+                }
+            }
+        }
+        public static void LoadContent(ContentManager contentManager, GraphicsDevice graphicsDevice)
+        {
+            for(int i = 0; i < stations.Count; i++)
+            {
+                stations[i].LoadContent(contentManager, graphicsDevice);
+            }
+            stationButton = GlobalContent.AddTexture("StationButton", ThemeManager.LoadLayeredContent<Texture2D>("graphics/stations/stationbutton"));
+            stationButtonSelected = GlobalContent.AddTexture("StationButtonSelected", ThemeManager.LoadLayeredContent<Texture2D>("graphics/stations/stationbuttonselected"));
+            pixel = GlobalContent.GetTexture("Pixel");
         }
     }
 }

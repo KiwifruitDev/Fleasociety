@@ -209,12 +209,12 @@ namespace Fleasociety
         }
         public static bool Update(GameTime gameTime, bool handleInput)
         {
-            bool handle = handleInput;
+            bool handled = !handleInput;
             foreach (CustomerObject customer in customerObjects)
             {
-                handle = customer.Update(gameTime, handle);
+                handled = customer.Update(gameTime, !handled);
             }
-            return handle;
+            return handled;
         }
         public static void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {

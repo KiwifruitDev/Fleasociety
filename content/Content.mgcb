@@ -141,6 +141,30 @@
 /processorParam:TextureFormat=Color
 /build:graphics/stations/order/speechbutton.png
 
+#begin graphics/stations/stationbutton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:graphics/stations/stationbutton.png
+
+#begin graphics/stations/stationbuttonselected.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:graphics/stations/stationbuttonselected.png
+
 #begin graphics/ticket.png
 /importer:TextureImporter
 /processor:TextureProcessor

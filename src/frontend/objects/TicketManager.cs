@@ -143,8 +143,7 @@ namespace Fleasociety
             spriteBatch.Draw(gfxTicket, GlobalGraphics.Scale(new Rectangle((int)position.X, (int)position.Y + gfxTicket1.Bounds.Height, gfxTicket.Bounds.Width, gfxTicket.Bounds.Height)), ticketColor);
 
             // Draw customer id as #0 - #255
-            //string customerIdText = $"#{ticket.customerId}";
-            string customerIdText = $"{position.X}";
+            string customerIdText = $"#{ticket.customerId+1}";
             GlobalGraphics.DrawString(spriteBatch, L.FontSmall(), customerIdText, GlobalGraphics.Scale(new Vector2(position.X + 1, position.Y + 7)), Color.Red);
 
             // If the mouse is hovering over the ticket, show a tooltip.
